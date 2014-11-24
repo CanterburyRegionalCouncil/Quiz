@@ -40,9 +40,9 @@ function (
         var SCORES = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Scoring/FeatureServer/0';
         //var WORLD_IMAGERY = 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer';
 		var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer';
-        var PROXY = 'http://maps.esri.com/rc/quiz/proxy.ashx';
+        var PROXY = '/proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
-        var VENICE = new Point({
+        var MAPSTART = new Point({
             'x': 1570181,
             'y': 5180354,
             'spatialReference': {
@@ -119,7 +119,7 @@ function (
             logo: false,
             showAttribution: false,
             slider: false,
-            center: VENICE,
+            center: MAPSTART,
             zoom: 10 //17
         });
         map.addLayers([
@@ -176,7 +176,7 @@ function (
             $('#banner-welcome').slideDown();
             
             maximizeForRotation(map);
-            map.centerAndZoom(VENICE, 17);
+            map.centerAndZoom(MAPSTART, 10); //was 17
             $('#map').animo({
                 animation: 'spinner',
                 iterate: 'infinite',
