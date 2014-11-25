@@ -35,12 +35,20 @@ function (
         // Load widgets
         parser.parse();
 
+        var debug = true;
+
         // Constants
-        var QUIZ = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Question/FeatureServer/0';
-        var SCORES = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Scoring/FeatureServer/0';
+        //var QUIZ = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Question/FeatureServer/0';
+        var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Questions_WMAS/FeatureServer/0';
+        //var SCORES = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Scoring/FeatureServer/0';
+        var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_WMAS/FeatureServer/0';
+
+
+
         //var WORLD_IMAGERY = 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer';
-		var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer';
-        var PROXY = '/proxy.ashx';
+        var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer';
+        var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer';
+        var PROXY = 'proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
         var MAPSTART = new Point({
             'x': 1570181,
@@ -88,10 +96,10 @@ function (
         $.ajaxSetup({ cache: true });
         $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
             FB.init({
-                appId: '533790430081552',
-                cookie: true,   // enable cookies to allow the server to access the session
-                xfbml: false,   // parse social plugins on this page
-                version: 'v2.0' // use version 2.0
+                appId: '632149183560112', // '533790430081552',
+               // cookie: true,   // enable cookies to allow the server to access the session
+                xfbml: true,   // parse social plugins on this page
+                version: 'v2.2' // use version 2.0
             });
             FB.getLoginStatus(facebookStatusChanged);
         });
@@ -319,7 +327,7 @@ function (
                 'fake1',
                 'fake2',
                 'fake3',
-                'level',
+                'level_',
                 'wiki'
             ];
             query.outSpatialReference = map.spatialReference;
@@ -338,7 +346,7 @@ function (
                                 fake1: this.attributes['fake1'],
                                 fake2: this.attributes['fake2'],
                                 fake3: this.attributes['fake3'],
-                                level: this.attributes['level'],
+                                level: this.attributes['level_'],
                                 wiki: this.attributes['wiki']
                             },
                             correct: false,
@@ -356,7 +364,7 @@ function (
                             games.push(game);
                         }
                     });
-
+                    ///if (debug) console.log('games', games);
                     defer.resolve(games);
                 },
                 function () { }
@@ -382,6 +390,8 @@ function (
             map.on('update-end', function () {
                 if (!playing) { return; }
                 playing = false;
+
+                if (debug) console.log('games',_games);
 
                 var answers = [
                     _games[_gameIndex].quiz.answer,
@@ -631,18 +641,18 @@ function (
             var s3 = new StatisticDefinition();
             s1.statisticType = 'count';
             s1.onStatisticField = 'fbid';
-            s1.outStatisticFieldName = 'count';
+            s1.outStatisticFieldName = 'count_';
             s2.statisticType = 'sum';
             s2.onStatisticField = 'score';
-            s2.outStatisticFieldName = 'sum';
+            s2.outStatisticFieldName = 'sum_';
             s3.statisticType = 'max';
             s3.onStatisticField = 'score';
-            s3.outStatisticFieldName = 'max';
+            s3.outStatisticFieldName = 'max_';
 
             var query = new Query();
             query.where = '1=1';
             query.returnGeometry = false;
-            query.orderByFields = ['max DESC'];
+            query.orderByFields = ['max_ DESC'];
             query.groupByFieldsForStatistics = ['fbid'];
             query.outStatistics = [s1, s2, s3];
 
@@ -658,9 +668,9 @@ function (
                     $.each(results.features, function () {
                         stats.push({
                             fbid: this.attributes.fbid,
-                            max: this.attributes.max,
-                            sum: this.attributes.sum,
-                            count: this.attributes.count
+                            max: this.attributes.max_,
+                            sum: this.attributes.sum_,
+                            count: this.attributes.count_
                         });
                     });
 
