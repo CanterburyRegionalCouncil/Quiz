@@ -75,13 +75,16 @@ function (
         var PROXY = 'proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
         
+        
+        var introMap;
+
         //randomise start map
         function getIntroMap()
         {
-        	return introMaps[ getRandomInt(1, introMaps.length - 1 )];
+            introMap= introMaps[ getRandomInt(1, introMaps.length - 1 )];
         };
 
-        var introMap = getIntroMap();
+        getIntroMap();
 
         if(debug)console.log('introMap', introMap);
 
@@ -215,6 +218,7 @@ function (
         // Button events
         $('#button-login').click(function () {
             FB.login(facebookStatusChanged);
+            randomiseMap();
         });
         $('#button-play').click(function () {
             _isHome = false;
@@ -227,14 +231,17 @@ function (
             $('#banner-welcome').hide();
             $('#banner-highscore').slideDown();
             loadScores();
+            randomiseMap();
         });
         $('#button-highscore-tohome').click(function () {
             _isHome = true;
             $('#banner-welcome').slideDown();
             $('#banner-highscore').hide();
+            randomiseMap();
         });
         $('#button-logout').click(function () {
             FB.logout(facebookStatusChanged);
+            randomiseMap();
         });
         $('#button-next').click(function () {
             $('#banner-welcome').hide();
@@ -248,16 +255,15 @@ function (
             $('#banner-bottom').hide();
             $('#banner-welcome').slideDown();
             
-            maximizeForRotation(map);
-            
-            map.centerAndZoom(introMapStart(), getRandomInt(Number(introMap.split('|')[5]),Number(introMap.split('|')[6])).toString()); //was 17
-            
-            $('#map').animo({
-                animation: 'spinner',
-                iterate: 'infinite',
-                timing: 'linear',
-                duration: 90
-            });
+            randomiseMap();
+            //maximizeForRotation(map);
+
+            //$('#map').animo({
+            //    animation: 'spinner',
+            //    iterate: 'infinite',
+            //    timing: 'linear',
+            //    duration: 90
+            //});
         });
         $('#button-newgame').click(function () {
             $('#banner-bottom').hide();
@@ -303,6 +309,22 @@ function (
             });
             map.resize();
             map.reposition();
+        };
+
+        function randomiseMap() {
+            
+            getIntroMap();
+            changeBaseMap(introMap.split('|')[0]);
+            map.centerAndZoom(introMapStart(), getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString()); //was 17
+
+            maximizeForRotation(map);
+
+            $('#map').animo({
+                animation: 'spinner',
+                iterate: 'infinite',
+                timing: 'linear',
+                duration: 90
+            });
         };
 
         function facebookStatusChanged(response) {
@@ -546,13 +568,18 @@ function (
             if(debug)console.log ('basemap map:' ,  map.getLayer("intromap"));
 
             //change base map if not the same
-            baseLayer =  map.getLayer("intromap");
-            if ( baseLayer.url != _games[_gameIndex].quiz.MapServiceURL){
-                map.removeLayer(baseLayer);
-                baseLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
-                map.addLayer(baseLayer);
+            if (baseLayer.url != _games[_gameIndex].quiz.MapServiceURL) {
+                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL);
             }
             return defer.promise();
+        };
+
+        function changeBaseMap(url) {
+            map.removeLayer(baseLayer);
+            baseLayer = new ArcGISTiledMapServiceLayer(url, {
+                id: 'intromap'
+            });
+            map.addLayer(baseLayer);
         };
 
         function showGameScore() {
