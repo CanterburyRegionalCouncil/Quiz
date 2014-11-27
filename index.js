@@ -39,9 +39,9 @@ function (
 
         // Constants
         //var QUIZ = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Question/FeatureServer/0';
-        var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Questions_WMAS/FeatureServer/0';
+        var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/1';
         //var SCORES = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Scoring/FeatureServer/0';
-        var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_WMAS/FeatureServer/0';
+        var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
 
 
@@ -59,6 +59,13 @@ function (
         });
         var NUMBER_OF_QUESTIONS = 6;
         var TIME_LIMIT = 10;
+
+        var MapServerURLs = []; // for map server urls
+
+        //load map servers urls
+        getMapServerURLs();
+
+        var quizMapLayer = null ;
 
         // Inidicate usage of proxy for the following hosted map services
         $.each([QUIZ, SCORES], function () {
@@ -96,7 +103,7 @@ function (
         $.ajaxSetup({ cache: true });
         $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
             FB.init({
-                appId: '632149183560112', // '533790430081552',
+                appId: '632132856895078', // dev one '632149183560112', // '533790430081552',
                // cookie: true,   // enable cookies to allow the server to access the session
                 xfbml: true,   // parse social plugins on this page
                 version: 'v2.2' // use version 2.0
@@ -327,8 +334,9 @@ function (
                 'fake1',
                 'fake2',
                 'fake3',
-                'level_',
-                'wiki'
+                'AnswerComment',
+                'wiki',
+                'MapServiceURL'
             ];
             query.outSpatialReference = map.spatialReference;
             query.returnGeometry = true;
@@ -336,6 +344,8 @@ function (
             queryTask.execute(
                 query,
                 function (results) {
+                    if (debug) console.log('quiz results', results);
+
                     var games = [];
                     $.each(results.features, function () {
                         var game = {
@@ -346,8 +356,9 @@ function (
                                 fake1: this.attributes['fake1'],
                                 fake2: this.attributes['fake2'],
                                 fake3: this.attributes['fake3'],
-                                level: this.attributes['level_'],
-                                wiki: this.attributes['wiki']
+                                AnswerComment: this.attributes['AnswerComment'],
+                                wiki: this.attributes['wiki'],
+                                MapServiceURL: this.attributes['MapServiceURL']
                             },
                             correct: false,
                             timeStart: null,
@@ -359,12 +370,13 @@ function (
                             game.quiz.fake1 &&
                             game.quiz.fake2 &&
                             game.quiz.fake3 &&
-                            game.quiz.level &&
-                            game.quiz.wiki) {
+                            game.quiz.MapServiceURL &&
+                            (game.quiz.wiki || game.quiz.AnswerComment)
+                            ) {
                             games.push(game);
                         }
                     });
-                    ///if (debug) console.log('games', games);
+                    if (debug) console.log('games', games);
                     defer.resolve(games);
                 },
                 function () { }
@@ -466,10 +478,24 @@ function (
             });
 
             // Zoom to quiz
-            map.centerAndZoom(
-                _games[_gameIndex].quiz.location,
-                _games[_gameIndex].quiz.level
-            );
+
+            var _extent = _games[_gameIndex].quiz.location.getExtent();
+            //_extent * .8;
+            map.setExtent(_extent)
+
+            //change base map if not the same
+            if (quizMapLayer == null)
+            {
+                quizMapLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
+                map.addLayer(quizMapLayer);
+            }
+            if (quizMapLayer != null  && quizMapLayer.url != _games[_gameIndex].quiz.MapServiceURL) {
+                map.removeLayer(quizMapLayer);
+                quizMapLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
+                map.addLayer(quizMapLayer);
+            }
+
+//            map.centerAndZoom(_games[_gameIndex].quiz.location,_games[_gameIndex].quiz.level);
 
             return defer.promise();
         };
@@ -694,6 +720,34 @@ function (
                     $('#banner-top-high').html('{0}pt'.format(personalBest));
                     $('#banner-top-rank').html('{0}/{1}'.format(place, players));
                     $('#banner-top-life').html('{0}pt'.format(lifetime));
+                },
+                function () { }
+            );
+        };
+
+
+
+        function getMapServerURLs() {
+            var query = new Query();
+            query.where = '1=1';
+            query.returnGeometry = false;
+            query.returnDistinctValues = true;
+
+            var queryTask = new QueryTask(QUIZ);
+            queryTask.execute(
+                query,
+                function (results) {
+                    // Exit if nothing returned
+                    if (!results || !results.features || results.features.length == 0) {
+                        return;
+                    }
+                    MapServerURLs = [];
+                    $.each(results.features, function () {
+                        MapServerURLs.push({
+                            MapServerURL: this.attributes.MapServiceURL
+                        });
+                    });
+                   
                 },
                 function () { }
             );
