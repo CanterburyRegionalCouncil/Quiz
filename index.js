@@ -72,7 +72,7 @@ function (
  	   return Math.floor(Math.random() * (max - min + 1)) + min;
 		};
 
-        var PROXY = '' //'proxy.ashx';
+        var PROXY = 'proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
         
         //randomise start map
