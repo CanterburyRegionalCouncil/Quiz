@@ -160,7 +160,7 @@ function (
         $.ajaxSetup({ cache: true });
         $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
             FB.init({
-                appId: '632132856895078', // dev one '632149183560112', // '533790430081552',
+                appId: 632132856895078,//prod one '632132856895078', // dev one '632149183560112', // '533790430081552',
                // cookie: true,   // enable cookies to allow the server to access the session
                 xfbml: true,   // parse social plugins on this page
                 version: 'v2.2' // use version 2.0
@@ -195,11 +195,11 @@ function (
             zoom: getRandomInt(Number(introMap.split('|')[5]),Number(introMap.split('|')[6])).toString()  ///17
         });
 
-        map.addLayers([
-            new ArcGISTiledMapServiceLayer(introMap.split('|')[0], {
-                id: 'intromap'
-            })
-        ]);
+        var baseLayer = new ArcGISTiledMapServiceLayer(introMap.split('|')[0], {
+            id: 'intromap'
+        });
+        map.addLayers([baseLayer]);
+
         map.on('load', function () {
             // Download ids and games as soon as the map has initialized
             getQuizIds().done(function (ids) {
@@ -543,20 +543,15 @@ function (
             //_extent * .8;
             map.setExtent(_extent)
 
+            if(debug)console.log ('basemap map:' ,  map.getLayer("intromap"));
+
             //change base map if not the same
-            if (quizMapLayer == null)
-            {
-                quizMapLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
-                map.addLayer(quizMapLayer);
+            baseLayer =  map.getLayer("intromap");
+            if ( baseLayer.url != _games[_gameIndex].quiz.MapServiceURL){
+                map.removeLayer(baseLayer);
+                baseLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
+                map.addLayer(baseLayer);
             }
-            if (quizMapLayer != null  && quizMapLayer.url != _games[_gameIndex].quiz.MapServiceURL) {
-                map.removeLayer(quizMapLayer);
-                quizMapLayer = new ArcGISTiledMapServiceLayer(_games[_gameIndex].quiz.MapServiceURL);
-                map.addLayer(quizMapLayer);
-            }
-
-//            map.centerAndZoom(_games[_gameIndex].quiz.location,_games[_gameIndex].quiz.level);
-
             return defer.promise();
         };
 
