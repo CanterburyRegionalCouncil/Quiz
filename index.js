@@ -38,32 +38,89 @@ function (
         var debug = true;
 
         // Constants
-        //var QUIZ = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Question/FeatureServer/0';
         var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/1';
-        //var SCORES = 'http://services.arcgis.com/6DIQcwlPy8knb6sg/arcgis/rest/services/MapQuizJS_Scoring/FeatureServer/0';
         var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
+        var introMaps = [
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer| 1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|18',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|8|12' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|8' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/NZAM_11010_Christchurch_20110224/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15' 
+        ];
 
+        /**
+ 		* Returns a random number between min (inclusive) and max (exclusive)
+ 		*/
+		function getRandomArbitrary(min, max) {
+    	return Math.random() * (max - min) + min;
+		}
 
-        //var WORLD_IMAGERY = 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer';
-        var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer';
-        var WORLD_IMAGERY = 'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer';
-        var PROXY = 'proxy.ashx';
+		        /**
+ 		* Returns a random integer between min (inclusive) and max (inclusive)
+ 		* Using Math.round() will give you a non-uniform distribution!
+ 		*/
+        function getRandomInt(min, max) {
+ 	   return Math.floor(Math.random() * (max - min + 1)) + min;
+		};
+
+        var PROXY = '' //'proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
-        var MAPSTART = new Point({
-            'x': 1570181,
-            'y': 5180354,
+        
+        //randomise start map
+        function getIntroMap()
+        {
+        	return introMaps[ getRandomInt(1, introMaps.length - 1 )];
+        };
+
+        var introMap = getIntroMap();
+
+        if(debug)console.log('introMap', introMap);
+
+        function introMapminX()
+        { return Number(introMap.split('|')[1])};
+        function introMapminY()
+        { return Number(introMap.split('|')[2])};
+        function introMapmaxX()
+        { return Number(introMap.split('|')[3])};
+        function introMapmaxY()
+        { return Number(introMap.split('|')[4])};
+
+        function xpt_rand() {
+        	return getRandomInt(introMapminX(), introMapmaxX());
+        };
+        function ypt_rand() {
+        	return getRandomInt(introMapminY(), introMapmaxY());
+        };
+
+		function introMapStart(){
+		return	new Point({
+            'x': xpt_rand(),
+            'y': ypt_rand(),
             'spatialReference': {
                 'wkid': 2193
             }
         });
+		};
+
+		if(debug) console.log('introMapStart',introMapStart());
+
         var NUMBER_OF_QUESTIONS = 6;
         var TIME_LIMIT = 10;
 
         var MapServerURLs = []; // for map server urls
 
         //load map servers urls
-        getMapServerURLs();
+        //not needed now...
+        //getMapServerURLs();
 
         var quizMapLayer = null ;
 
@@ -134,12 +191,13 @@ function (
             logo: false,
             showAttribution: false,
             slider: false,
-            center: MAPSTART,
-            zoom: 10 //17
+            center: introMapStart(),
+            zoom: getRandomInt(Number(introMap.split('|')[5]),Number(introMap.split('|')[6])).toString()  ///17
         });
+
         map.addLayers([
-            new ArcGISTiledMapServiceLayer(WORLD_IMAGERY, {
-                id: 'world_imagery'
+            new ArcGISTiledMapServiceLayer(introMap.split('|')[0], {
+                id: 'intromap'
             })
         ]);
         map.on('load', function () {
@@ -191,7 +249,9 @@ function (
             $('#banner-welcome').slideDown();
             
             maximizeForRotation(map);
-            map.centerAndZoom(MAPSTART, 10); //was 17
+            
+            map.centerAndZoom(introMapStart(), getRandomInt(Number(introMap.split('|')[5]),Number(introMap.split('|')[6])).toString()); //was 17
+            
             $('#map').animo({
                 animation: 'spinner',
                 iterate: 'infinite',
