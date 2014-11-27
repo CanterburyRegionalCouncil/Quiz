@@ -230,6 +230,11 @@
     pointer-events: none;
 }
 
+#sociallogon {
+    text-align: center;
+    margin-top: 50px;
+}
+
 #button-group-disconnected {
     position:absolute;
     left: 50%;
