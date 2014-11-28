@@ -1,0 +1,25 @@
+From 045343b1f9a387806a01e82684b450e5b89a3cb1 Mon Sep 17 00:00:00 2001
+From: "coomsie@gmail.com" <coomsie@gmail.com>
+Date: Fri, 28 Nov 2014 00:47:26 +1300
+Subject: [PATCH] change for new social icons
+
+---
+ index.html | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/index.html b/index.html
+index eefed06..038b33d 100644
+--- a/index.html
++++ b/index.html
+@@ -176,7 +176,7 @@
+     google   : '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
+     twitter : '1168204784',
+     linkedin : 'tocome'
+-},{redirect_uri:'http://localhost:9000/index.html'});
++        }, { redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/' });
+ 
+     </script>
+     <script type="text/javascript">
+-- 
+1.8.4.2
+
