@@ -56,14 +56,15 @@ function (
     });
 
     hello.init({ 
-            facebook : '632149183560112',
-            windows  : 'tocome',
+            facebook :  '632132856895078', ///,prod one '632132856895078',////dev one '632149183560112',
             google   : '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
-            twitter : '1168204784',
-            linkedin : 'tocome'
+            twitter : '1168204784'
+            // windows  : 'tocome',
+            ///linkedin : 'tocome'
             },{
-            oauth_proxy : 'http://localhost:9000/oauthproxy',
-            redirect_uri:'http://localhost:9000/index.html'});
+                oauth_proxy: 'http://canterburymaps.govt.nz/webmaps/mapquiz/oauthproxy',
+            redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
+            });
 
 
 
@@ -421,27 +422,14 @@ function (
         };
 
         function getFacebookProfile(id) {
-            var defer = new $.Deferred();
-            var url = '/{0}'.format(id);
-            FB.api(url, function (r) {
-                defer.resolve(r);
-            });
-            return defer.promise();
+            return "";
         };
 
+        //need to sort out a solution for these....
         function getFacebookPicture(id, size) {
             var defer = new $.Deferred();
-            var url = '/{0}/picture?redirect={1}&height={2}&width={3}&type={4}'.format(
-                id,
-                '0',
-                size,
-                size,
-                'normal'
-            );
-            FB.api(url, function(response) {
-                var pic = response.data.url.replace('https', 'http');
-                defer.resolve(pic);
-            });
+            var url = 'http://graph.facebook.com/app_scoped_user_id/{0}/'.format(id);
+            defer.resolve(url);
             return defer.promise();
         };
 
@@ -924,7 +912,8 @@ function (
                         .css('top', '0px')
                         .css('left', '0px')
                         .css('width', '100px')
-                        .css('height', '100px');
+                        .css('height', '100px')
+                        .css('background-repeat', 'no-repeat');
 
                     var txt = $(document.createElement('div'))
                         .css('position', 'absolute')
@@ -976,26 +965,24 @@ function (
                     bas.appendTo(div);
                     div.appendTo('#banner-highscore-right');
 
-                    // Get Profile
-                    hello( r.network ).api( '/me' ).then( function(p){
-                        nam.html(p.name);
-                        img.css({
-                            background: 'url({0})'.format(p.thumbnail)
-                        });
-                    });
 
-                    // getFacebookProfile(this.fbid).done(function (r) {
-                    //     var n = '{0} {1}.'.format(
-                    //         r.first_name,
-                    //         r.last_name.substring(0, 1)
-                    //     );
-                    //     nam.html(n);
-                    // });
-                    // getFacebookPicture(this.fbid, 100).done(function (url) {
-                    //     img.css({
-                    //         background: 'url({0})'.format(url)
-                    //     });
-                    // });
+                    // Get Profile
+                    //hello( r.network ).api( '/me' ).then( function(p){
+                    //    nam.html(p.name);
+                    //    img.css({
+                    //        background: 'url({0})'.format(p.thumbnail)
+                    //    });
+                    //});
+
+
+                    //test for facebook
+                    if (this.ServiceType = 'facebook') {
+                        
+                        var _url = 'http://graph.facebook.com/' + this.fbid + '/picture';
+                            img.css({
+                                background: 'url({0})'.format(_url) + ' no-repeat'
+                            });
+                    }
                 });
             });
         };
