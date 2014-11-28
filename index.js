@@ -758,7 +758,7 @@ function (
                         'date': Date.now(),
                         'correct': correct,
                         'wrong': wrong,
-                        'ServiceType': ''
+                        'ServiceType': _servicetype
                     }
                 );
                 var fl = new FeatureLayer(SCORES);
