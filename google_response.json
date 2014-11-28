@@ -1,0 +1,119 @@
+{
+ "kind": "plus#person",
+ "etag": "\"RqKWnRU4WW46-6W3rWhLR9iFZQM/35FFr-I76F8q5xLu0gscKQXTCRg\"",
+ "occupation": "Technology Specialist",
+ "gender": "male",
+ "urls": [
+  {
+   "value": "http://coomsie.blogspot.com/",
+   "type": "otherProfile",
+   "label": "Personal Blog"
+  },
+  {
+   "value": "http://biztalkblog.blogspot.com/",
+   "type": "otherProfile",
+   "label": "Blogger (Blogspot) - biztalkblog"
+  },
+  {
+   "value": "http://iaincampion.blogspot.com/",
+   "type": "otherProfile",
+   "label": "Blogger (Blogspot) - iaincampion"
+  },
+  {
+   "value": "http://mysharepointblog.blogspot.com/",
+   "type": "otherProfile",
+   "label": "Blogger (Blogspot) - mysharepointblog"
+  },
+  {
+   "value": "http://www.blogger.com/profile/05632537034374757331",
+   "type": "otherProfile",
+   "label": "Blogger (Profile)"
+  },
+  {
+   "value": "http://www.google.com/reader/shared/08933199316533331536",
+   "type": "otherProfile",
+   "label": "My shared items in Google Reader"
+  },
+  {
+   "value": "http://picasaweb.google.com/coomsie",
+   "type": "otherProfile",
+   "label": "Picasa Web Albums - coomsie"
+  },
+  {
+   "value": "http://youtube.com/user/CoomsieNZ",
+   "type": "otherProfile",
+   "label": "YouTube - coomsienz"
+  },
+  {
+   "value": "https://profiles.google.com/100042529990762625892/buzz",
+   "type": "contributor",
+   "label": "Buzz"
+  },
+  {
+   "value": "http://www.coomsie.com",
+   "type": "other",
+   "label": "coomse.com"
+  },
+  {
+   "value": "http://touchee.coomsie.com/",
+   "type": "other",
+   "label": "touchee.coomsie.com"
+  },
+  {
+   "value": "http://blog.coomsie.com/",
+   "type": "other",
+   "label": "blog.coomsie.com"
+  },
+  {
+   "value": "http://techierants.coomsie.com/",
+   "type": "other",
+   "label": "techierants.coomsie.com"
+  }
+ ],
+ "objectType": "person",
+ "id": "100042529990762625892",
+ "displayName": "Iain Campion",
+ "name": {
+  "familyName": "Campion",
+  "givenName": "Iain"
+ },
+ "url": "https://plus.google.com/100042529990762625892",
+ "image": {
+  "url": "https://lh6.googleusercontent.com/-0g9HZt2_ieg/AAAAAAAAAAI/AAAAAAAACLs/5mlNMKHYPeI/photo.jpg?sz=50",
+  "isDefault": false
+ },
+ "placesLived": [
+  {
+   "value": "Christchurch, Canterbury, New Zealand",
+   "primary": true
+  },
+  {
+   "value": "Rangiora,  Canterbury, New Zealand"
+  },
+  {
+   "value": "London"
+  },
+  {
+   "value": "Wellington, New Zealand"
+  },
+  {
+   "value": "Auckland, New Zealand"
+  }
+ ],
+ "isPlusUser": true,
+ "language": "en_GB",
+ "circledByCount": 28,
+ "verified": false,
+ "cover": {
+  "layout": "banner",
+  "coverPhoto": {
+   "url": "https://lh4.googleusercontent.com/-5BQ0RikwA0A/T7C-qzQgdiI/AAAAAAAACsA/OJR0JG2G7Wo/s630/dsc00266.jpg",
+   "height": 181,
+   "width": 940
+  },
+  "coverInfo": {
+   "topImageOffset": 0,
+   "leftImageOffset": 0
+  }
+ }
+}

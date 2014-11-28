@@ -37,13 +37,14 @@
         <div id='sociallogon'>
         <a href="#" class="zocial facebook" onclick="hello( 'facebook' ).login()">Sign in with Facebook</a>
         <a href="#" class="zocial googleplus" onclick="hello( 'google' ).login()">Sign in with Google+</a>
-        <a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
+        <!-- <a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
         <a href="#" class="zocial linkedin" onclick="hello( 'linkedin' ).login()">Sign in with LinkedIn</a>
         <a href="#" class="zocial windows" onclick="hello( 'windows' ).login()">Sign in with Windows Live</a>
-        <p style="background:white;opacity:.5">these logon's above still working on connecting ...</p>
+        -->
+        <p style="background:white;opacity:.5" class='hide'>these logon's above still working on connecting ...</p>
         </div>
         <div id='button-group-disconnected' class="btn-group">
-            <button id='button-login' type="button" class="btn btn-primary">Log In</button>
+            <button id='button-login' type="button" class="btn btn-primary hide">Log In</button>
             <button id='button-highscores1' type='button' class='btn btn-primary'>High Scores</button>
         </div>
         <div id='button-group-connected' class="btn-group">
@@ -152,33 +153,6 @@
         </div>
         <div id='banner-highscore-right'></div>
     </div>
-    <script>
-    //hello js social login code TEST
-
-        hello.on('auth.login', function(auth){
-    
-        // call user information, for the given network
-        hello( auth.network ).api( '/me' ).then( function(r){
-            // Inject it into the container
-            var label = document.getElementById( "profile_"+ auth.network );
-            if(!label){
-                label = document.createElement('div');
-                label.id = "profile_"+auth.network;
-                document.getElementById('profile').appendChild(label);
-            }
-            label.innerHTML = '<img src="'+ r.thumbnail +'" /> Hey '+r.name;
-            });
-        });
-
-        hello.init({ 
-    facebook : '632149183560112',
-    windows  : 'tocome',
-    google   : '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
-    twitter : '1168204784',
-    linkedin : 'tocome'
-},{redirect_uri:'http://localhost:9000/index.html'});
-
-    </script>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-3089899-26']);

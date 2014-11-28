@@ -37,6 +37,38 @@ function (
 
         var debug = true;
 
+
+    //hello js social login code TEST
+
+    var debug = true;
+
+    hello.on('auth.login', function(auth){
+    
+    // call user information, for the given network
+    hello( auth.network ).api( '/me' ).then( function(r){
+        
+        if(debug)console.log('auth:: ' ,  auth );
+        if(debug)console.log('profile:: ' ,  r );
+        //change User after login
+        randomiseMap();
+        changeUser(auth,r);
+        });
+    });
+
+    hello.init({ 
+            facebook : '632149183560112',
+            windows  : 'tocome',
+            google   : '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
+            twitter : '1168204784',
+            linkedin : 'tocome'
+            },{
+            oauth_proxy : 'http://localhost:9000/oauthproxy',
+            redirect_uri:'http://localhost:9000/index.html'});
+
+
+
+
+
         // Constants
         var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/1';
         var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
@@ -136,7 +168,9 @@ function (
         });
 
         // Facebook Profile
+        //now is all netowrks ... not just facebook
         var _fb = null;
+        var _servicetype = null;
         var _timer = null;
         var _isHome = true;
         var _games = [];
@@ -160,16 +194,16 @@ function (
         $('#banner-welcome').slideDown();
 
         // Connect to FaceBook
-        $.ajaxSetup({ cache: true });
-        $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
-            FB.init({
-                appId: 632132856895078,//prod one '632132856895078', // dev one '632149183560112', // '533790430081552',
-               // cookie: true,   // enable cookies to allow the server to access the session
-                xfbml: true,   // parse social plugins on this page
-                version: 'v2.2' // use version 2.0
-            });
-            FB.getLoginStatus(facebookStatusChanged);
-        });
+        // $.ajaxSetup({ cache: true });
+        // $.getScript('//connect.facebook.net/en_US/sdk.js', function () {
+        //     FB.init({
+        //         appId: 632132856895078,//prod one '632132856895078', // dev one '632149183560112', // '533790430081552',
+        //        // cookie: true,   // enable cookies to allow the server to access the session
+        //         xfbml: true,   // parse social plugins on this page
+        //         version: 'v2.2' // use version 2.0
+        //     });
+        //     FB.getLoginStatus(facebookStatusChanged);
+        // });
 
         // Expand map so that it can rotate
         function maximizeForRotation(map) {
@@ -240,7 +274,21 @@ function (
             randomiseMap();
         });
         $('#button-logout').click(function () {
-            FB.logout(facebookStatusChanged);
+            //FB.logout(facebookStatusChanged);
+            hello( _servicetype ).logout().then( function(){
+                
+                $('#button-group-disconnected').show();
+                $('#button-group-connected').hide();
+                $('#banner-top').slideUp('fast', 'swing');
+                $('#banner-top-high').html('');
+                $('#banner-top-rank').html('');
+                $('#banner-top-life').html('');
+                _servicetype = null;
+
+            }, function(e){
+                alert( "Signed out error:" + e.error.message );
+            });
+
             randomiseMap();
         });
         $('#button-next').click(function () {
@@ -327,25 +375,41 @@ function (
             });
         };
 
-        function facebookStatusChanged(response) {
-            if (response.status === 'connected') {
+        //function facebookStatusChanged(response) {
+            function changeUser(auth, r){
+        
+            //if (response.status === 'connected') {
+            if (r) {
                 $('#button-group-disconnected').hide();
                 $('#button-group-connected').show();
                 $('#banner-top').slideDown('fast', 'swing');
-                getFacebookProfile('me').done(function (r) {
+
+                //facebook block
+                if (auth.network == 'facebook' || auth.network == 'google'){
+
+                    //set netwwor service type
+                    _servicetype = auth.network;
+
+                //getFacebookProfile('me').done(function (r) {
                     // first name/gender/id/last_name/link/locale/name/updated_time
                     _fb = r; 
                     $('#fb-name').html(_fb.name);
 
                     // Download user statistics
                     updateStatistics();
-                });
-                getFacebookPicture('me', 200).done(function (url) {
+                //});
+                ///getFacebookPicture('me', 200).done(function (url) {
                     $('#fb-picture').css(
                         'background-image',
-                        'url(\'{0}\')'.format(url)
+                        'url(\'{0}\')'.format(_fb.thumbnail)
                     );
-                });
+                }
+                
+                //twitter block
+
+                //google plus block
+
+
             } else {
                 $('#button-group-disconnected').show();
                 $('#button-group-connected').hide();
@@ -705,7 +769,8 @@ function (
                         'score': newTotalScore,
                         'date': Date.now(),
                         'correct': correct,
-                        'wrong': wrong
+                        'wrong': wrong,
+                        'ServiceType': ''
                     }
                 );
                 var fl = new FeatureLayer(SCORES);
@@ -911,18 +976,26 @@ function (
                     bas.appendTo(div);
                     div.appendTo('#banner-highscore-right');
 
-                    getFacebookProfile(this.fbid).done(function (r) {
-                        var n = '{0} {1}.'.format(
-                            r.first_name,
-                            r.last_name.substring(0, 1)
-                        );
-                        nam.html(n);
-                    });
-                    getFacebookPicture(this.fbid, 100).done(function (url) {
+                    // Get Profile
+                    hello( r.network ).api( '/me' ).then( function(p){
+                        nam.html(p.name);
                         img.css({
-                            background: 'url({0})'.format(url)
+                            background: 'url({0})'.format(p.thumbnail)
                         });
                     });
+
+                    // getFacebookProfile(this.fbid).done(function (r) {
+                    //     var n = '{0} {1}.'.format(
+                    //         r.first_name,
+                    //         r.last_name.substring(0, 1)
+                    //     );
+                    //     nam.html(n);
+                    // });
+                    // getFacebookPicture(this.fbid, 100).done(function (url) {
+                    //     img.css({
+                    //         background: 'url({0})'.format(url)
+                    //     });
+                    // });
                 });
             });
         };
@@ -968,7 +1041,8 @@ function (
                 'score',
                 'date',
                 'correct',
-                'wrong'
+                'wrong' ,
+                'ServiceType'
             ];
             query.orderByFields = ['score DESC', 'correct DESC'];
             query.returnGeometry = false;
@@ -983,13 +1057,15 @@ function (
                             score: this.attributes['score'],
                             date: this.attributes['date'],
                             correct: this.attributes['correct'],
-                            wrong: this.attributes['wrong']
+                            wrong: this.attributes['wrong'],
+                            ServiceType: this.attributes['ServiceType']
                         };
                         if (score.fbid != null &&
                             score.score != null &&
                             score.date != null &&
                             score.correct != null &&
-                            score.wrong != null) {
+                            score.wrong != null &&
+                            score.ServiceType !=null ) {
                             scores.push(score);
                         }
                     });
@@ -998,12 +1074,14 @@ function (
                     } else {
                         var userScores = {
                             fbids: [],
+                            ServiceType: [],
                             scores: []
                         };
                         $.each(scores, function () {
                             var index = userScores.fbids.indexOf(this.fbid);
                             if (index == -1) {
                                 userScores.fbids.push(this.fbid);
+                                userScores.ServiceType.push(this.ServiceType);
                                 userScores.scores.push(this);
                             }
                         });
