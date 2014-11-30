@@ -34,19 +34,23 @@
     <div id='banner-welcome'>
         <div id="title">Welcome to MapQuiz by <img src="img/canterbury-maps-logo-2.png" /></div>
         <div id="description">The game that tests your geographic literacy from historical/modern imagery within the Canterbury region</div>
-        <div id='sociallogon'>
-        <a href="#" class="zocial facebook" onclick="hello( 'facebook' ).login()">Sign in with Facebook</a>
-        <a href="#" class="zocial googleplus" onclick="hello( 'google' ).login()">Sign in with Google+</a>
-        <!-- <a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
-        <a href="#" class="zocial linkedin" onclick="hello( 'linkedin' ).login()">Sign in with LinkedIn</a>
-        <a href="#" class="zocial windows" onclick="hello( 'windows' ).login()">Sign in with Windows Live</a>
-        -->
-        <p style="background:white;opacity:.5" class='hide'>these logon's above still working on connecting ...</p>
-        </div>
         <div id='button-group-disconnected' class="btn-group">
+            <i class="registerBusy glyphicon glyphicon-busy"></i>
             <button id='button-login' type="button" class="btn btn-primary hide">Log In</button>
             <button id='button-highscores1' type='button' class='btn btn-primary'>High Scores</button>
         </div>
+        <div id='sociallogon'>
+        <a href="#" class="zocial facebook" onclick="hello( 'facebook' ).login()">Sign in with Facebook</a>
+        <a href="#" class="zocial googleplus" onclick="hello( 'google' ).login()">Sign in with Google+</a>
+        <!--<a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
+        <a href="#" class="zocial linkedin" onclick="hello( 'linkedin' ).login()">Sign in with LinkedIn</a>
+        <a href="#" class="zocial windows" onclick="hello( 'windows' ).login()">Sign in with Windows Live</a>
+        -->
+            <div id="logintoplay"><strong>login to play ...</strong></div>
+            </div>
+        
+
+
         <div id='button-group-connected' class="btn-group">
             <button id='button-play' type='button' class='btn btn-primary'>Play</button>
             <button id='button-highscores2' type='button' class='btn btn-primary'>High Scores</button>
@@ -150,6 +154,7 @@
                     <input type='radio' name='who' id='button-who-everyone' checked> Everyone
                 </label>
             </div>
+            <i class="registerBusy glyphicon glyphicon-busy"></i>
         </div>
         <div id='banner-highscore-right'></div>
     </div>

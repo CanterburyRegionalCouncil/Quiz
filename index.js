@@ -62,7 +62,7 @@ function (
             // windows  : 'tocome',
             ///linkedin : 'tocome'
             },{
-                oauth_proxy: 'http://canterburymaps.govt.nz/webmaps/mapquiz/oauthproxy',
+                oauth_proxy: 'http://canterburymaps.govt.nz/webapps/mapquiz/proxy.ashx',
             redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
             });
 
@@ -85,7 +85,7 @@ function (
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15' ,
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15' 
         ];
@@ -193,6 +193,8 @@ function (
             duration: 90
         });
         $('#banner-welcome').slideDown();
+        $('#button-group-disconnected').show();
+        $('.registerBusy').show();
 
         // Connect to FaceBook
         // $.ajaxSetup({ cache: true });
@@ -236,9 +238,25 @@ function (
         var baseLayer = new ArcGISTiledMapServiceLayer(introMap.split('|')[0], {
             id: 'intromap'
         });
+
+        baseLayer.on('update-end', function () {
+            //show progress 
+            $('.registerBusy').hide();
+            if(debug)console.log('update-end baselayer');
+        });
+
+        baseLayer.on('update-start', function () {
+            //show progress 
+            $('.registerBusy').show();
+            if (debug) console.log('update-stART baselayer');
+        });
+
+
         map.addLayers([baseLayer]);
 
         map.on('load', function () {
+            
+
             // Download ids and games as soon as the map has initialized
             getQuizIds().done(function (ids) {
                 var gameIds = getGameIds(ids);
@@ -534,6 +552,7 @@ function (
             // Start timer only after map has loaded
             var playing = true;
             map.on('update-end', function () {
+
                 if (!playing) { return; }
                 playing = false;
 
@@ -630,6 +649,17 @@ function (
             map.removeLayer(baseLayer);
             baseLayer = new ArcGISTiledMapServiceLayer(url, {
                 id: 'intromap'
+            });
+            baseLayer.on('update-end', function () {
+                //show progress 
+                $('.registerBusy').hide();
+                if (debug) console.log('update-end baselayer');
+            });
+
+            baseLayer.on('update-start', function () {
+                //show progress 
+                $('.registerBusy').show();
+                if (debug) console.log('update-stART baselayer');
             });
             map.addLayer(baseLayer);
         };
