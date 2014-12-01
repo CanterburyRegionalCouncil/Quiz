@@ -668,6 +668,10 @@ function (
                 if (debug) console.log('update-stART baselayer');
             });
             map.addLayer(baseLayer);
+
+            map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
+
+            
         };
 
         function showGameScore() {
