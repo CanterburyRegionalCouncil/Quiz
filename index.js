@@ -176,6 +176,7 @@ function (
         var _isHome = true;
         var _games = [];
         var _gameIndex = 0;
+        var _currentUsersocialthumbnailURL = null;
 
         // Resize logic
         $(window).resize(function () {
@@ -297,6 +298,7 @@ function (
             hello( _servicetype ).logout().then( function(){
                 
                 $('#button-group-disconnected').show();
+                $('#sociallogon').show();
                 $('#button-group-connected').hide();
                 $('#banner-top').slideUp('fast', 'swing');
                 $('#banner-top-high').html('');
@@ -400,8 +402,12 @@ function (
             //if (response.status === 'connected') {
             if (r) {
                 $('#button-group-disconnected').hide();
+                $('#sociallogon').hide();
                 $('#button-group-connected').show();
                 $('#banner-top').slideDown('fast', 'swing');
+
+                //set thumbnail url
+                _currentUsersocialthumbnailURL = r.thumbnail;
 
                 //facebook block
                 if (auth.network == 'facebook' || auth.network == 'google'){
@@ -788,7 +794,8 @@ function (
                         'date': Date.now(),
                         'correct': correct,
                         'wrong': wrong,
-                        'ServiceType': _servicetype
+                        'ServiceType': _servicetype,
+                        'ThumbnailUrl' : _currentUsersocialthumbnailURL
                     }
                 );
                 var fl = new FeatureLayer(SCORES);
@@ -859,6 +866,7 @@ function (
                     $.each(results.features, function () {
                         stats.push({
                             fbid: this.attributes.fbid,
+                            socialthumbnailURL: this.attributes.ThumbnailUrl,
                             max: this.attributes.max_,
                             sum: this.attributes.sum_,
                             count: this.attributes.count_
@@ -1004,16 +1012,21 @@ function (
                     //    });
                     //});
 
-
-                    //test for facebook
-                    if (this.ServiceType = 'facebook') {
+                    //update image ...
+                    if (this.ThumbnailUrl) {
+                        img.css({
+                            background: 'url({0})'.format(this.ThumbnailUrl) + ' no-repeat'
+                        });
+                    }
+                    //test for facebook // not needed now?
+                    if (this.ServiceType == 'facebook') {
                         
                         var _url = 'http://graph.facebook.com/' + this.fbid + '/picture';
                             img.css({
                                 background: 'url({0})'.format(_url) + ' no-repeat'
                             });
                     }
-                });
+                }); //end of each?
             });
         };
 
@@ -1059,7 +1072,8 @@ function (
                 'date',
                 'correct',
                 'wrong' ,
-                'ServiceType'
+                'ServiceType',
+                'ThumbnailUrl'
             ];
             query.orderByFields = ['score DESC', 'correct DESC'];
             query.returnGeometry = false;
@@ -1075,14 +1089,16 @@ function (
                             date: this.attributes['date'],
                             correct: this.attributes['correct'],
                             wrong: this.attributes['wrong'],
-                            ServiceType: this.attributes['ServiceType']
+                            ServiceType: this.attributes['ServiceType'],
+                            ThumbnailUrl: this.attributes['ThumbnailUrl']
                         };
                         if (score.fbid != null &&
                             score.score != null &&
                             score.date != null &&
                             score.correct != null &&
                             score.wrong != null &&
-                            score.ServiceType !=null ) {
+                            score.ServiceType !=null &&
+                            score.ThumbnailUrl !=null) {
                             scores.push(score);
                         }
                     });
@@ -1092,6 +1108,7 @@ function (
                         var userScores = {
                             fbids: [],
                             ServiceType: [],
+                            ThumbnailUrl: [],
                             scores: []
                         };
                         $.each(scores, function () {
@@ -1099,6 +1116,7 @@ function (
                             if (index == -1) {
                                 userScores.fbids.push(this.fbid);
                                 userScores.ServiceType.push(this.ServiceType);
+                                userScores.ThumbnailUrl.push(this.ThumbnailUrl);
                                 userScores.scores.push(this);
                             }
                         });
