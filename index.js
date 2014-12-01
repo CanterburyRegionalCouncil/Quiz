@@ -382,8 +382,9 @@ function (
 
         function randomiseMap() {
             
+            //randomised map
             getIntroMap();
-            changeBaseMap(introMap.split('|')[0]);
+            changeBaseMap(introMap.split('|')[0],true);
             map.centerAndZoom(introMapStart(), getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString()); //was 17
 
             maximizeForRotation(map);
@@ -669,6 +670,7 @@ function (
             });
             map.addLayer(baseLayer);
 
+            if(changeZoom)
             map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
 
         };
