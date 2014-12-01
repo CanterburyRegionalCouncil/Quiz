@@ -646,12 +646,12 @@ function (
 
             //change base map if not the same
             if (baseLayer.url != _games[_gameIndex].quiz.MapServiceURL) {
-                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL);
+                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL , false);
             }
             return defer.promise();
         };
 
-        function changeBaseMap(url) {
+        function changeBaseMap(url, changeZoom) {
             map.removeLayer(baseLayer);
             baseLayer = new ArcGISTiledMapServiceLayer(url, {
                 id: 'intromap'
@@ -671,7 +671,6 @@ function (
 
             map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
 
-            
         };
 
         function showGameScore() {
