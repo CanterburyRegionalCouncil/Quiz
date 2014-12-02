@@ -262,10 +262,10 @@ function (
         baseLayer.on('update-start', function () {
             //show progress 
             $('.registerBusy').show();
-            if (debug) console.log('update-stART baselayer' , baseLayer.url , '::zoomlevel' , map.getZoom());
+            if (debug) console.log('update-stART baselayer' , baseLayer.url , '::zoomlevel' , map.getZoom() , 'extent ::' , map.extent);
         });
 
-
+        
         map.addLayers([baseLayer]);
 
         map.on('load', function () {
@@ -695,7 +695,7 @@ function (
             baseLayer.on('update-start', function () {
                 //show progress 
                 $('.registerBusy').show();
-                if (debug) console.log('update-stART baselayer');
+                if (debug) console.log('update-stART baselayer', baseLayer.url, '::zoomlevel', map.getZoom(), 'extent ::', map.extent);
             });
             map.addLayer(baseLayer);
 
@@ -1095,10 +1095,15 @@ function (
             }
 
             // Filter by user
-            if (_fb.id == null) _fb.id =0; //check if exist?
-            
-            if ($('#button-who-me').prop('checked')) {
-                where += " AND fbid = '{0}'".format(_fb.id);
+            if (_fb == null) {
+                //check if exist?
+                if ($('#button-who-me').prop('checked')) {
+                    where += " AND fbid = '0'";
+                }
+            } else {
+                if ($('#button-who-me').prop('checked')) {
+                    where += " AND fbid = '{0}'".format(_fb.id);
+                }
             }
 
             query.where = where;
