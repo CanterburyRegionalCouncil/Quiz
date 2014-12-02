@@ -38,36 +38,50 @@ function (
         var debug = true;
 
 
-    //hello js social login code TEST
+        //hello js social login code TEST
 
-    var debug = true;
+        var debug = true;
 
-    hello.on('auth.login', function(auth){
-    
-    // call user information, for the given network
-    hello( auth.network ).api( '/me' ).then( function(r){
-        
-        if(debug)console.log('auth:: ' ,  auth );
-        if(debug)console.log('profile:: ' ,  r );
-        //change User after login
-        randomiseMap();
-        changeUser(auth,r);
+        hello.on('auth.login', function (auth) {
+
+            // call user information, for the given network
+            hello(auth.network).api('/me').then(function (r) {
+
+                if (debug) console.log('auth:: ', auth);
+                if (debug) console.log('profile:: ', r);
+                //change User after login
+                randomiseMap();
+                changeUser(auth, r);
+            });
         });
-    });
 
-    hello.init({ 
-            facebook :  '632132856895078', ///,prod one '632132856895078',////dev one '632149183560112',
-            google   : '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
-            twitter : '1168204784'
+        hello.init({
+            facebook: '632132856895078', ///,prod one '632132856895078',////dev one '632149183560112',
+            google: '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
+            twitter: '1168204784'
             // windows  : 'tocome',
             ///linkedin : 'tocome'
-            },{
-                oauth_proxy: 'http://canterburymaps.govt.nz/webapps/mapquiz/proxy.ashx',
+        }, {
+            oauth_proxy: 'http://canterburymaps.govt.nz/webapps/mapquiz/proxy.ashx',
             redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
-            });
+        });
 
 
-
+        //function to post to facebook status upadate
+        function FaceBookPost(network) {
+            hello.login(network, {
+                scope: 'publish'
+            }, function () {
+                // Post the contents of the form
+                hello.api(network + ':/me/share', 'post', document.getElementById('activity_form'), function (r) {
+                    if (!r || r.error) {
+                        alert("Whoops! " + r.error.message);
+                    } else {
+                        // alert("Your message has been published to "+ network);
+                    }
+                });
+            })
+        };
 
 
         // Constants
@@ -75,79 +89,78 @@ function (
         var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
         var introMaps = [
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer| 1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|18',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|8|12' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|8' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/NZAM_11010_Christchurch_20110224/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16' ,
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15' 
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|8|12',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|8',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/NZAM_11010_Christchurch_20110224/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15'
         ];
 
         /**
  		* Returns a random number between min (inclusive) and max (exclusive)
  		*/
-		function getRandomArbitrary(min, max) {
-    	return Math.random() * (max - min) + min;
-		}
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
 
-		        /**
- 		* Returns a random integer between min (inclusive) and max (inclusive)
- 		* Using Math.round() will give you a non-uniform distribution!
- 		*/
+        /**
+* Returns a random integer between min (inclusive) and max (inclusive)
+* Using Math.round() will give you a non-uniform distribution!
+*/
         function getRandomInt(min, max) {
- 	   return Math.floor(Math.random() * (max - min + 1)) + min;
-		};
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
 
         var PROXY = 'proxy.ashx';
         var WIKI = 'http://en.wikipedia.org/w/api.php';
-        
-        
+
+
         var introMap;
 
         //randomise start map
-        function getIntroMap()
-        {
-            introMap= introMaps[ getRandomInt(1, introMaps.length - 1 )];
+        function getIntroMap() {
+            introMap = introMaps[getRandomInt(1, introMaps.length - 1)];
         };
 
         getIntroMap();
 
-        if(debug)console.log('introMap', introMap);
+        if (debug) console.log('introMap', introMap);
 
         function introMapminX()
-        { return Number(introMap.split('|')[1])};
+        { return Number(introMap.split('|')[1]) };
         function introMapminY()
-        { return Number(introMap.split('|')[2])};
+        { return Number(introMap.split('|')[2]) };
         function introMapmaxX()
-        { return Number(introMap.split('|')[3])};
+        { return Number(introMap.split('|')[3]) };
         function introMapmaxY()
-        { return Number(introMap.split('|')[4])};
+        { return Number(introMap.split('|')[4]) };
 
         function xpt_rand() {
-        	return getRandomInt(introMapminX(), introMapmaxX());
+            return getRandomInt(introMapminX(), introMapmaxX());
         };
         function ypt_rand() {
-        	return getRandomInt(introMapminY(), introMapmaxY());
+            return getRandomInt(introMapminY(), introMapmaxY());
         };
 
-		function introMapStart(){
-		return	new Point({
-            'x': xpt_rand(),
-            'y': ypt_rand(),
-            'spatialReference': {
-                'wkid': 2193
-            }
-        });
-		};
+        function introMapStart() {
+            return new Point({
+                'x': xpt_rand(),
+                'y': ypt_rand(),
+                'spatialReference': {
+                    'wkid': 2193
+                }
+            });
+        };
 
-		if(debug) console.log('introMapStart',introMapStart());
+        if (debug) console.log('introMapStart', introMapStart());
 
         var NUMBER_OF_QUESTIONS = 6;
         var TIME_LIMIT = 10;
@@ -158,7 +171,7 @@ function (
         //not needed now...
         //getMapServerURLs();
 
-        var quizMapLayer = null ;
+        var quizMapLayer = null;
 
         // Inidicate usage of proxy for the following hosted map services
         $.each([QUIZ, SCORES], function () {
@@ -233,7 +246,7 @@ function (
             showAttribution: false,
             slider: false,
             center: introMapStart(),
-            zoom: getRandomInt(Number(introMap.split('|')[5]),Number(introMap.split('|')[6])).toString()  ///17
+            zoom: getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString()  ///17
         });
 
         var baseLayer = new ArcGISTiledMapServiceLayer(introMap.split('|')[0], {
@@ -243,7 +256,7 @@ function (
         baseLayer.on('update-end', function () {
             //show progress 
             $('.registerBusy').hide();
-            if(debug)console.log('update-end baselayer');
+            if (debug) console.log('update-end baselayer');
         });
 
         baseLayer.on('update-start', function () {
@@ -256,7 +269,7 @@ function (
         map.addLayers([baseLayer]);
 
         map.on('load', function () {
-            
+
 
             // Download ids and games as soon as the map has initialized
             getQuizIds().done(function (ids) {
@@ -295,8 +308,8 @@ function (
         });
         $('#button-logout').click(function () {
             //FB.logout(facebookStatusChanged);
-            hello( _servicetype ).logout().then( function(){
-                
+            hello(_servicetype).logout().then(function () {
+
                 $('#button-group-disconnected').show();
                 $('#sociallogon').show();
                 $('#button-group-connected').hide();
@@ -306,8 +319,8 @@ function (
                 $('#banner-top-life').html('');
                 _servicetype = null;
 
-            }, function(e){
-                alert( "Signed out error:" + e.error.message );
+            }, function (e) {
+                alert("Signed out error:" + e.error.message);
             });
 
             randomiseMap();
@@ -323,7 +336,7 @@ function (
             $('#banner-answer').hide();
             $('#banner-bottom').hide();
             $('#banner-welcome').slideDown();
-            
+
             randomiseMap();
             //maximizeForRotation(map);
 
@@ -381,10 +394,10 @@ function (
         };
 
         function randomiseMap() {
-            
+
             //randomised map
             getIntroMap();
-            changeBaseMap(introMap.split('|')[0],true);
+            changeBaseMap(introMap.split('|')[0], true);
             map.centerAndZoom(introMapStart(), getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString()); //was 17
 
             maximizeForRotation(map);
@@ -398,8 +411,8 @@ function (
         };
 
         //function facebookStatusChanged(response) {
-            function changeUser(auth, r){
-        
+        function changeUser(auth, r) {
+
             //if (response.status === 'connected') {
             if (r) {
                 $('#button-group-disconnected').hide();
@@ -410,27 +423,43 @@ function (
                 //set thumbnail url
                 _currentUsersocialthumbnailURL = r.thumbnail;
 
-                //facebook block
-                if (auth.network == 'facebook' || auth.network == 'google'){
+                //facebook block & google block
+                if (auth.network == 'facebook' || auth.network == 'google') {
 
                     //set netwwor service type
                     _servicetype = auth.network;
 
-                //getFacebookProfile('me').done(function (r) {
+                    //getFacebookProfile('me').done(function (r) {
                     // first name/gender/id/last_name/link/locale/name/updated_time
-                    _fb = r; 
+                    _fb = r;
                     $('#fb-name').html(_fb.name);
 
                     // Download user statistics
                     updateStatistics();
-                //});
-                ///getFacebookPicture('me', 200).done(function (url) {
+                    //});
+                    ///getFacebookPicture('me', 200).done(function (url) {
                     $('#fb-picture').css(
                         'background-image',
                         'url(\'{0}\')'.format(_fb.thumbnail)
                     );
                 }
-                
+
+                //just facebook
+                if (auth.network == 'facebook') {
+                    $('#facebook-share').show();
+                    $('#facebook-share').click(function () {
+                        FaceBookPost('facebook');
+                    });
+                }
+
+                //just google +
+                if (auth.network == 'google') {
+                    $('#facebook-share').hide();
+                    $('#button-share').click(function () {
+                        //GooglePlus();
+                    });
+                }
+
                 //twitter block
 
                 //google plus block
@@ -563,7 +592,7 @@ function (
                 if (!playing) { return; }
                 playing = false;
 
-                if (debug) console.log('games',_games);
+                if (debug) console.log('games', _games);
 
                 var answers = [
                     _games[_gameIndex].quiz.answer,
@@ -584,7 +613,7 @@ function (
                 $('#button-answer3').html(answers[2]);
                 $('#button-answer4').html(answers[3]);
                 $('#answers > button').removeAttr('disabled');
-                
+
                 if (_timer) {
                     clearTimeout(_timer);
                     _timer = null;
@@ -612,7 +641,7 @@ function (
 
                 // Download wikipedia snippet
                 $('#banner-answer-right-value').html('');
-                
+
                 var url = '{0}?{1}'.format(PROXY, WIKI);
                 url += '?action=query';
                 url += '&prop=extracts';
@@ -643,11 +672,11 @@ function (
             //_extent * .8;
             map.setExtent(_extent)
 
-            if(debug)console.log ('basemap map:' ,  map.getLayer("intromap"));
+            if (debug) console.log('basemap map:', map.getLayer("intromap"));
 
             //change base map if not the same
             if (baseLayer.url != _games[_gameIndex].quiz.MapServiceURL) {
-                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL , false);
+                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL, false);
             }
             return defer.promise();
         };
@@ -670,8 +699,8 @@ function (
             });
             map.addLayer(baseLayer);
 
-            if(changeZoom)
-            map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
+            if (changeZoom)
+                map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
 
         };
 
@@ -704,7 +733,7 @@ function (
                 games.toString(),
                 NUMBER_OF_QUESTIONS.toString()
             ));
-            
+
             // Points for correct answer
             var award = _games[_gameIndex].correct ? 10 : 0;
 
@@ -740,10 +769,10 @@ function (
                     });
                 });
             });
-            
+
             // The "about" title
             $('#banner-answer-right-title').html('About {0}'.format(_games[_gameIndex].quiz.answer));
-            
+
             // Credit link
             $('#banner-answer-right-wiki').prop(
                 'href',
@@ -762,7 +791,7 @@ function (
                 // Disable 'play' and 'new game' buttons while downloading new quizes
                 $('#button-play').attr('disabled', 'disabled');
                 $('#button-newgame').attr('disabled', 'disabled');
-            
+
                 // Immediately request new game data
                 getQuizIds().done(function (ids) {
                     var gameIds = getGameIds(ids);
@@ -773,7 +802,7 @@ function (
                         $('#button-newgame').removeAttr('disabled');
                     });
                 });
-                
+
                 var correct = 0;
                 var wrong = 0;
                 $.each(_games, function () {
@@ -800,7 +829,7 @@ function (
                         'correct': correct,
                         'wrong': wrong,
                         'ServiceType': _servicetype,
-                        'ThumbnailUrl' : _currentUsersocialthumbnailURL
+                        'ThumbnailUrl': _currentUsersocialthumbnailURL
                     }
                 );
                 var fl = new FeatureLayer(SCORES);
@@ -815,7 +844,7 @@ function (
         };
 
         function animateLabel(div, from, to) {
-            var defer = new $.Deferred();           
+            var defer = new $.Deferred();
             var INTERVAL = 75;
             var duration = (to - from) * INTERVAL / 1000;
             var timer = window.setInterval(
@@ -925,7 +954,7 @@ function (
                             MapServerURL: this.attributes.MapServiceURL
                         });
                     });
-                   
+
                 },
                 function () { }
             );
@@ -1025,11 +1054,11 @@ function (
                     }
                     //test for facebook // not needed now?
                     if (this.ServiceType == 'facebook') {
-                        
+
                         var _url = 'http://graph.facebook.com/' + this.fbid + '/picture';
-                            img.css({
-                                background: 'url({0})'.format(_url) + ' no-repeat'
-                            });
+                        img.css({
+                            background: 'url({0})'.format(_url) + ' no-repeat'
+                        });
                     }
                 }); //end of each?
             });
@@ -1076,7 +1105,7 @@ function (
                 'score',
                 'date',
                 'correct',
-                'wrong' ,
+                'wrong',
                 'ServiceType',
                 'ThumbnailUrl'
             ];
@@ -1102,8 +1131,8 @@ function (
                             score.date != null &&
                             score.correct != null &&
                             score.wrong != null &&
-                            score.ServiceType !=null &&
-                            score.ThumbnailUrl !=null) {
+                            score.ServiceType != null &&
+                            score.ThumbnailUrl != null) {
                             scores.push(score);
                         }
                     });
