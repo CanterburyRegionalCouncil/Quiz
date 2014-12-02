@@ -262,7 +262,7 @@ function (
         baseLayer.on('update-start', function () {
             //show progress 
             $('.registerBusy').show();
-            if (debug) console.log('update-stART baselayer');
+            if (debug) console.log('update-stART baselayer' , baseLayer.url , '::zoomlevel' , map.getZoom());
         });
 
 
