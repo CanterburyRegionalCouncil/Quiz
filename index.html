@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:ng="http://angularjs.org">
 
 <head>
     <meta charset="utf-8">
@@ -27,6 +27,21 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     <link rel="stylesheet" type="text/css" href="css/zocial.css" />
 
     <link type='text/css' rel='stylesheet' href='index.css?02122014'>
+    <!-- check browser version browser-update.org -->
+    <script>
+        var $buoop = {
+            c: 2
+            //,test: true,
+            //text: "<p>You are using a browser which this viewer does not support. Some features may not work correctly. Upgrade to a <a href='http://www.whatbrowser.org/' target='_blank'>modern browser</a> to take full advantage of this site.</p>",                       // custom notification html text
+        };
+        function $buo_f() {
+            var e = document.createElement("script");
+            e.src = "//browser-update.org/update.js";
+            document.body.appendChild(e);
+        };
+        try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
+        catch (e) { window.attachEvent("onload", $buo_f) }
+    </script>
     <script type='text/javascript' src='js/hello.js'></script>
     <!-- <script type='text/javascript' src='//js.arcgis.com/3.11compact/'></script> -->
     <script src="http://canterburymaps.govt.nz/api/3.11/arcgis_js_api/library/3.11/3.11/init.js"></script>
@@ -47,10 +62,10 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
 
 <body>
     <div style="display:none">
-    <img src="http://canterburymaps.govt.nz/Content/images/canterbury-maps-logo.png" />
+        <img src="http://canterburymaps.govt.nz/Content/images/canterbury-maps-logo.png" />
         <form id='activity_form'>
             <label>MapQuiz by Canterbury Maps</label>
-            <input type='text' name='message' value='Hello I just played this interesting quiz about Canterbury. It is a game that tests your geographic literacy from historical/modern imagery within the Canterbury region' </input>
+            <input type='text' name='message' value='Hello I just played this interesting quiz about Canterbury. It is a game that tests your geographic literacy from historical/modern imagery within the Canterbury region'></input>
             <label>click here to play</label>
             <input type='url' name='link' value='http://canterburymaps.govt.nz/webapps/mapquiz/'>
         </form>
@@ -58,7 +73,8 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     <div id="fb-root"></div>
     <div id='map' class='rc-full rc-disable'></div>
     <div id='banner-welcome'>
-        <div id="title">Welcome to MapQuiz by <img src="img/canterbury-maps-logo-2.png" />
+        <div id="title">
+            Welcome to MapQuiz by <img src="img/canterbury-maps-logo-2.png" />
         </div>
         <div id="description">The game that tests your geographic literacy from historical/modern imagery within the Canterbury region</div>
         <div id='button-group-disconnected' class="btn-group">
@@ -69,11 +85,12 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         <div id='sociallogon'>
             <a href="#" class="zocial facebook" onclick="hello( 'facebook' ).login()">Sign in with Facebook</a>
             <a href="#" class="zocial googleplus" onclick="hello( 'google' ).login()">Sign in with Google+</a>
-        <!--    <a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
-        <a href="#" class="zocial linkedin" onclick="hello( 'linkedin' ).login()">Sign in with LinkedIn</a>
-        <a href="#" class="zocial windows" onclick="hello( 'windows' ).login()">Sign in with Windows Live</a>
-        -->
-            <div id="logintoplay"><strong>login to play ...</strong>
+            <!--    <a href="#" class="zocial twitter" onclick="hello( 'twitter' ).login()">Sign in with Twitter</a>
+            <a href="#" class="zocial linkedin" onclick="hello( 'linkedin' ).login()">Sign in with LinkedIn</a>
+            <a href="#" class="zocial windows" onclick="hello( 'windows' ).login()">Sign in with Windows Live</a>
+            -->
+            <div id="logintoplay">
+                <strong>login to play ...</strong>
             </div>
         </div>
 
@@ -84,7 +101,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             <button id='button-play' type='button' class='btn btn-primary'>Play</button>
             <button id='button-highscores2' type='button' class='btn btn-primary'>High Scores</button>
             <button id='button-logout' type='button' class='btn btn-primary'>Log Out</button>
-            <div id='facebook-share' style='display:none' ></div>
+            <div id='facebook-share' style='display:none'></div>
             <div class="g-plus" data-action="share" data-height="24"></div>
         </div>
     </div>
@@ -190,28 +207,18 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         <div id='banner-highscore-right'></div>
     </div>
     <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-3089899-26']);
-    _gaq.push(['_trackPageview']);
-    (function() {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-3089899-26']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
     </script>
-    <script>
-        var $buoop = { c: 2 };
-        function $buo_f() {
-            var e = document.createElement("script");
-            e.src = "//browser-update.org/update.js";
-            document.body.appendChild(e);
-        };
-        try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
-        catch (e) { window.attachEvent("onload", $buo_f) }
-    </script> 
 </body>
 
 </html>
