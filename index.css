@@ -413,3 +413,13 @@ font-family: monospace;
 	-o-animation-name: grow;
 	animation-name: grow;
 }
+
+
+#facebook-share{
+    background-image: url(img/facebook_button.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 122px;
+    height: 34px;
+    display:inline-block;
+}
