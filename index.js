@@ -1095,6 +1095,8 @@ function (
             }
 
             // Filter by user
+            if (_fb.id == null) _fb.id =0; //check if exist?
+            
             if ($('#button-who-me').prop('checked')) {
                 where += " AND fbid = '{0}'".format(_fb.id);
             }
