@@ -62,7 +62,7 @@ function (
             // windows  : 'tocome',
             ///linkedin : 'tocome'
         }, {
-            oauth_proxy: 'http://canterburymaps.govt.nz/webapps/mapquiz/proxy.ashx',
+            oauth_proxy: 'https://auth-server.herokuapp.com/proxy',
             redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
         });
 
