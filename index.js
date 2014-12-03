@@ -89,7 +89,7 @@ function (
         var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
         var introMaps = [
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer| 1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|18',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
@@ -262,10 +262,10 @@ function (
         baseLayer.on('update-start', function () {
             //show progress 
             $('.registerBusy').show();
-            if (debug) console.log('update-stART baselayer');
+            if (debug) console.log('update-stART baselayer' , baseLayer.url , '::zoomlevel' , map.getZoom() , 'extent ::' , map.extent);
         });
 
-
+        
         map.addLayers([baseLayer]);
 
         map.on('load', function () {
@@ -695,7 +695,7 @@ function (
             baseLayer.on('update-start', function () {
                 //show progress 
                 $('.registerBusy').show();
-                if (debug) console.log('update-stART baselayer');
+                if (debug) console.log('update-stART baselayer', baseLayer.url, '::zoomlevel', map.getZoom(), 'extent ::', map.extent);
             });
             map.addLayer(baseLayer);
 
@@ -1095,10 +1095,15 @@ function (
             }
 
             // Filter by user
-            if (_fb.id == null) _fb.id =0; //check if exist?
-            
-            if ($('#button-who-me').prop('checked')) {
-                where += " AND fbid = '{0}'".format(_fb.id);
+            if (_fb == null) {
+                //check if exist?
+                if ($('#button-who-me').prop('checked')) {
+                    where += " AND fbid = '0'";
+                }
+            } else {
+                if ($('#button-who-me').prop('checked')) {
+                    where += " AND fbid = '{0}'".format(_fb.id);
+                }
             }
 
             query.where = where;
