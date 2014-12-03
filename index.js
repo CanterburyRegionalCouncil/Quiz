@@ -55,6 +55,11 @@ function (
             });
         });
 
+        //add error for auth
+        hello.on('auth.failed', function(r){
+         if(debug)console.log('social auth error:', r);
+        });
+
         hello.init({
             facebook: '632132856895078', ///,prod one '632132856895078',////dev one '632149183560112',
             google: '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
@@ -64,6 +69,7 @@ function (
         }, {
             oauth_proxy: 'https://auth-server.herokuapp.com/proxy',
             redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
+            ///redirect_uri: 'http://localhost:9000/index.html'
         });
 
 
@@ -829,6 +835,7 @@ function (
                         'correct': correct,
                         'wrong': wrong,
                         'ServiceType': _servicetype,
+                        ///TODO 'profilename': profilename ,
                         'ThumbnailUrl': _currentUsersocialthumbnailURL
                     }
                 );
@@ -900,7 +907,7 @@ function (
                     $.each(results.features, function () {
                         stats.push({
                             fbid: this.attributes.fbid,
-                            socialthumbnailURL: this.attributes.ThumbnailUrl,
+                            socialthumbnailURL: this.attributes.ThumbnailUrl, //NOT REALLY NEEDED HERE?
                             max: this.attributes.max_,
                             sum: this.attributes.sum_,
                             count: this.attributes.count_
@@ -1027,6 +1034,27 @@ function (
                         .html(formatDate(this.date));
                     //
 
+                    //TODO!!! - START
+
+                    //for name
+                    var name = $(document.createElement('div'))
+                        .css('position: absolute')
+                        .css('color: whitesmoke')
+                        .css('font-size: 1em')
+                        .css('pointer-events: none')
+                        .css('bottom: 5px')
+                        .css('left: 5px')
+                        .css('overflow: hidden');
+                    //add name
+
+                    var textnode = $(document.createTextNode(this.profilename))
+                    name.appendChild(textnode);
+
+                    //for name
+                    img.appendChild(name);    
+
+                    //TODO - END !!
+
                     sco.appendTo(txt);
                     nam.appendTo(txt);
                     cor.appendTo(txt);
@@ -1115,6 +1143,7 @@ function (
                 'wrong',
                 'ServiceType',
                 'ThumbnailUrl'
+                ///TODO  'profilename'
             ];
             query.orderByFields = ['score DESC', 'correct DESC'];
             query.returnGeometry = false;
@@ -1132,6 +1161,7 @@ function (
                             wrong: this.attributes['wrong'],
                             ServiceType: this.attributes['ServiceType'],
                             ThumbnailUrl: this.attributes['ThumbnailUrl']
+                            //TODO profilename : this.attributes['profilename']
                         };
                         if (score.fbid != null &&
                             score.score != null &&
@@ -1139,7 +1169,9 @@ function (
                             score.correct != null &&
                             score.wrong != null &&
                             score.ServiceType != null &&
-                            score.ThumbnailUrl != null) {
+                            score.ThumbnailUrl != null
+                            //TODO score.profilename != null
+                            ) {
                             scores.push(score);
                         }
                     });
@@ -1151,6 +1183,7 @@ function (
                             ServiceType: [],
                             ThumbnailUrl: [],
                             scores: []
+                            //TODO profilename: []
                         };
                         $.each(scores, function () {
                             var index = userScores.fbids.indexOf(this.fbid);
@@ -1158,7 +1191,9 @@ function (
                                 userScores.fbids.push(this.fbid);
                                 userScores.ServiceType.push(this.ServiceType);
                                 userScores.ThumbnailUrl.push(this.ThumbnailUrl);
+                                ///TODO userScores.scores.push(this.profilename);
                                 userScores.scores.push(this);
+
                             }
                         });
                         defer.resolve(userScores.scores);
