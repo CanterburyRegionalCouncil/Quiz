@@ -61,7 +61,7 @@ function (
         });
 
         hello.init({
-            facebook: '632132856895078', ///,prod one '632132856895078',////dev one '632149183560112',
+            facebook: '401573586656563', ///,prod one '401573586656563',////dev one '632149183560112',
             google: '603968519862-76vtig4dk577j4nn9e1o8rt378k4kk3d.apps.googleusercontent.com',
             twitter: '1168204784'
             // windows  : 'tocome',
@@ -164,6 +164,16 @@ function (
                     'wkid': 2193
                 }
             });
+            //var defer = new $.Deferred();          
+            //var _pt  = new Point({
+            //    'x': xpt_rand(),
+            //    'y': ypt_rand(),
+            //    'spatialReference': {
+            //        'wkid': 2193
+            //    }
+            //});
+            //defer.resolve(_pt);
+            ///return defer.promise();
         };
 
         if (debug) console.log('introMapStart', introMapStart());
@@ -196,6 +206,7 @@ function (
         var _games = [];
         var _gameIndex = 0;
         var _currentUsersocialthumbnailURL = null;
+        var _profileName = null;
 
         // Resize logic
         $(window).resize(function () {
@@ -439,6 +450,7 @@ function (
                     // first name/gender/id/last_name/link/locale/name/updated_time
                     _fb = r;
                     $('#fb-name').html(_fb.name);
+                    _profileName = _fb.name;
 
                     // Download user statistics
                     updateStatistics();
@@ -835,7 +847,7 @@ function (
                         'correct': correct,
                         'wrong': wrong,
                         'ServiceType': _servicetype,
-                        ///TODO 'profilename': profilename ,
+                        'profilename': _fb.name,
                         'ThumbnailUrl': _currentUsersocialthumbnailURL
                     }
                 );
@@ -1037,21 +1049,21 @@ function (
                     //TODO!!! - START
 
                     //for name
-                    var name = $(document.createElement('div'))
-                        .css('position: absolute')
-                        .css('color: whitesmoke')
-                        .css('font-size: 1em')
-                        .css('pointer-events: none')
-                        .css('bottom: 5px')
-                        .css('left: 5px')
-                        .css('overflow: hidden');
-                    //add name
+                    var _profilename = $(document.createElement('div'))
+                        .css('position', 'absolute')
+                        .css('color', 'whitesmoke')
+                        .css('font-size', ' 1em')
+                        .css('pointer-events', 'none')
+                        .css('bottom', '5px')
+                        .css('left', '5px')
+                        .css('overflow', 'hidden');
+                    //add _profilename
 
-                    var textnode = $(document.createTextNode(this.profilename))
-                    name.appendChild(textnode);
+                    var textnode = $(document.createTextNode(this.profilename));
+                    $(_profilename).append(textnode);
 
                     //for name
-                    img.appendChild(name);    
+                    $(img).append(_profilename);
 
                     //TODO - END !!
 
@@ -1142,8 +1154,8 @@ function (
                 'correct',
                 'wrong',
                 'ServiceType',
-                'ThumbnailUrl'
-                ///TODO  'profilename'
+                'ThumbnailUrl',
+                'profilename'
             ];
             query.orderByFields = ['score DESC', 'correct DESC'];
             query.returnGeometry = false;
@@ -1160,8 +1172,8 @@ function (
                             correct: this.attributes['correct'],
                             wrong: this.attributes['wrong'],
                             ServiceType: this.attributes['ServiceType'],
-                            ThumbnailUrl: this.attributes['ThumbnailUrl']
-                            //TODO profilename : this.attributes['profilename']
+                            ThumbnailUrl: this.attributes['ThumbnailUrl'],
+                            profilename : this.attributes['profilename']
                         };
                         if (score.fbid != null &&
                             score.score != null &&
@@ -1169,8 +1181,8 @@ function (
                             score.correct != null &&
                             score.wrong != null &&
                             score.ServiceType != null &&
-                            score.ThumbnailUrl != null
-                            //TODO score.profilename != null
+                            score.ThumbnailUrl != null &&
+                            score.profilename != null
                             ) {
                             scores.push(score);
                         }
@@ -1182,8 +1194,8 @@ function (
                             fbids: [],
                             ServiceType: [],
                             ThumbnailUrl: [],
-                            scores: []
-                            //TODO profilename: []
+                            scores: [],
+                            profilename: []
                         };
                         $.each(scores, function () {
                             var index = userScores.fbids.indexOf(this.fbid);
@@ -1191,7 +1203,7 @@ function (
                                 userScores.fbids.push(this.fbid);
                                 userScores.ServiceType.push(this.ServiceType);
                                 userScores.ThumbnailUrl.push(this.ThumbnailUrl);
-                                ///TODO userScores.scores.push(this.profilename);
+                                userScores.profilename.push(this.profilename);
                                 userScores.scores.push(this);
 
                             }
