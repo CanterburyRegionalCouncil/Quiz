@@ -667,6 +667,7 @@ function (
                 url += '&prop=extracts';
                 url += '&format=json';
                 url += '&exintro';
+                url += '&rawcontinue';
                 url += '&explaintext';
                 url += '&titles={0}'.format(
                     _games[_gameIndex].quiz.wiki
