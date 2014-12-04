@@ -91,8 +91,10 @@ function (
 
 
         // Constants
-        var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/1';
-        var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
+        //var QUIZ = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/1';
+        var QUIZ = 'http://arcgisprod03/arcgis/rest/services/Internal/MapQuiz_Scoring_NZTM/FeatureServer/1';
+        //var SCORES = 'http://arcgisdev01/arcgis/rest/services/External/MapQuiz_Scoring_NZTM/FeatureServer/0';
+        var SCORES = 'http://arcgisprod03/arcgis/rest/services/Internal/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
         var introMaps = [
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
