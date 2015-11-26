@@ -109,7 +109,8 @@ function (
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15',
         'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15'
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1995_1999/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15'
         ];
 
         /**
@@ -180,7 +181,7 @@ function (
 
         if (debug) console.log('introMapStart', introMapStart());
 
-        var NUMBER_OF_QUESTIONS = 6;
+        var NUMBER_OF_QUESTIONS = 20;
         var TIME_LIMIT = 10;
 
         var MapServerURLs = []; // for map server urls
@@ -523,12 +524,27 @@ function (
             );
             return defer.promise();
         };
+        
+        /**
+        * Randomize array element order in-place.
+        * Using Durstenfeld shuffle algorithm.
+        */
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
 
         function getGameIds(ids) {
             // Randomize
-            ids.sort(function () {
-                return Math.round(Math.random()) - 0.5;
-            });
+            // ids.sort(function () {
+            //     return Math.round(Math.random()) - 0.5;
+            // });
+            ids = shuffleArray(ids);
             return ids.slice(0, NUMBER_OF_QUESTIONS);
         }
 
