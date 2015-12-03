@@ -57,7 +57,7 @@ function (
 
         //add error for auth
         hello.on('auth.failed', function(r){
-         if(debug)console.log('social auth error:', r);
+            if(debug)console.log('social auth error:', r);
         });
 
         hello.init({
@@ -70,6 +70,8 @@ function (
             oauth_proxy: 'https://auth-server.herokuapp.com/proxy',
             redirect_uri: 'http://canterburymaps.govt.nz/webapps/mapquiz/'
             ///redirect_uri: 'http://localhost:9000/index.html'
+            //redirect_uri: 'http://localhost:55433/index.html'
+            //redirect_uri: 'http://test.canterburymaps.govt.nz/webapps/mapquiz/'
         });
 
 
@@ -97,20 +99,20 @@ function (
         var SCORES = 'http://arcgisprod03/arcgis/rest/services/Internal/MapQuiz_Scoring_NZTM/FeatureServer/0';
 
         var introMaps = [
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer| 1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|18',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|8|12',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|8',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/NZAM_11010_Christchurch_20110224/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
-        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1995_1999/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15'
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer| 1511924.435624478 | 5153780.60467797 | 1568424.7543747954 |5206173.418322029|6|18',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1568424.7543747954 |5206173.418322029|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1568424.7543747954 |5206173.418322029|8|12',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1568424.7543747954 |5206173.418322029|6|8',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/NZAM_11010_Christchurch_20110224/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|16',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1511924.435624478 | 5153780.60467797 | 1568424.7543747954 |5206173.418322029|12|15',
+        'http://gis.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1995_1999/MapServer|1576808.0483418903|5180712.738343977 | 1570672.2427369456|5184163.800912769|13|15'
         ];
 
         /**
@@ -182,7 +184,7 @@ function (
         if (debug) console.log('introMapStart', introMapStart());
 
         var NUMBER_OF_QUESTIONS = 20;
-        var TIME_LIMIT = 10;
+        var TIME_LIMIT = 5;
 
         var MapServerURLs = []; // for map server urls
 
@@ -226,6 +228,10 @@ function (
             timing: 'linear',
             duration: 90
         });
+
+        $('#sponsor').show();
+        $('#sponsor').animo({ animation: 'bounceInRight', duration: 5 });
+
         $('#banner-welcome').slideDown();
         $('#button-group-disconnected').show();
         $('.registerBusy').show();
@@ -310,22 +316,37 @@ function (
         $('#button-play').click(function () {
             _isHome = false;
             $('#banner-welcome').hide();
+            $('#banner-prizes').hide();
+            $('#sponsor').hide();
             $('#banner-top-high-score').html('0pt');
             playQuiz();
         });
         $('#button-highscores1, #button-highscores2').click(function () {
             _isHome = true;
             $('#banner-welcome').hide();
+            $('#sponsor').hide();
             $('#banner-highscore').slideDown();
+            $('#banner-prizes').hide();
             loadScores();
             randomiseMap();
         });
         $('#button-highscore-tohome').click(function () {
             _isHome = true;
             $('#banner-welcome').slideDown();
+            $('#sponsor').slideDown();
+            $('#banner-prizes').hide();
             $('#banner-highscore').hide();
             randomiseMap();
         });
+        $('#button-prizes-tohome').click(function () {
+            _isHome = true;
+            $('#banner-welcome').slideDown();
+            $('#sponsor').slideDown();
+            $('#banner-prizes').hide();
+            $('#banner-highscore').hide();
+            randomiseMap();
+        });
+
         $('#button-logout').click(function () {
             //FB.logout(facebookStatusChanged);
             hello(_servicetype).logout().then(function () {
@@ -347,17 +368,21 @@ function (
         });
         $('#button-next').click(function () {
             $('#banner-welcome').hide();
+            $('#banner-prizes').hide();
+            $('#sponsor').hide();
             $('#banner-bottom').hide();
             $('#banner-answer').hide();
             playQuiz();
         });
         $('#button-home').click(function () {
             _isHome = true;
+            $('#banner-prizes').hide();
             $('#banner-answer').hide();
             $('#banner-bottom').hide();
             $('#banner-welcome').slideDown();
-
+            $('#sponsor').slideDown();
             randomiseMap();
+
             //maximizeForRotation(map);
 
             //$('#map').animo({
@@ -366,6 +391,17 @@ function (
             //    timing: 'linear',
             //    duration: 90
             //});
+        });
+
+        $('#button-prizes').click(function () {
+            $('#banner-welcome').hide();
+            $('#banner-prizes').show();
+            randomiseMap();
+        });
+        $('#button-prizes2').click(function () {
+            $('#banner-welcome').hide();
+            $('#banner-prizes').show();
+            randomiseMap();
         });
         $('#button-newgame').click(function () {
             $('#banner-bottom').hide();
@@ -909,6 +945,7 @@ function (
             var s1 = new StatisticDefinition();
             var s2 = new StatisticDefinition();
             var s3 = new StatisticDefinition();
+            var s4 = new StatisticDefinition();
             s1.statisticType = 'count';
             s1.onStatisticField = 'fbid';
             s1.outStatisticFieldName = 'count_';
@@ -919,12 +956,16 @@ function (
             s3.onStatisticField = 'score';
             s3.outStatisticFieldName = 'max_';
 
+            s4.statisticType = 'avg';
+            s4.onStatisticField = 'score';
+            s4.outStatisticFieldName = 'avg_';
+
             var query = new Query();
             query.where = '1=1';
             query.returnGeometry = false;
             query.orderByFields = ['max_ DESC'];
             query.groupByFieldsForStatistics = ['fbid'];
-            query.outStatistics = [s1, s2, s3];
+            query.outStatistics = [s1, s2, s3, s4];
 
             var queryTask = new QueryTask(SCORES);
             queryTask.execute(
@@ -941,7 +982,8 @@ function (
                             socialthumbnailURL: this.attributes.ThumbnailUrl, //NOT REALLY NEEDED HERE?
                             max: this.attributes.max_,
                             sum: this.attributes.sum_,
-                            count: this.attributes.count_
+                            count: this.attributes.count_,
+                            avg: this.attributes.avg_
                         });
                     });
 
@@ -952,11 +994,13 @@ function (
                     var place = 1;
                     var personalBest = 0;
                     var lifetime = 0;
+                    var average = 0;
                     $.each(stats, function (index) {
                         if (this.fbid == _fb.id) {
                             place = index + 1;
                             personalBest = this.max;
                             lifetime = this.sum;
+                            average = this.avg;
                             return false;
                         }
                     });
@@ -965,6 +1009,7 @@ function (
                     $('#banner-top-high').html('{0}pt'.format(personalBest));
                     $('#banner-top-rank').html('{0}/{1}'.format(place, players));
                     $('#banner-top-life').html('{0}pt'.format(lifetime));
+                    $('#banner-top-avg').html('{0}pt'.format(average));
                 },
                 function () { }
             );

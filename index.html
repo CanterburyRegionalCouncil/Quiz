@@ -18,7 +18,10 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     <link rel="apple-touch-icon" sizes="72x72" href="http://canterburymaps.govt.nz/Content/images/ios/72x72iOS.png">
     <link rel="apple-touch-icon" sizes="114x114" href="http://canterburymaps.govt.nz/Content/images/ios/114x114iOS.png">
     <link rel="apple-touch-icon" sizes="144x144" href="http://canterburymaps.govt.nz/Content/images/ios/144x144iOS.png">
-    <link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!--<link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />-->
     <link type='text/css' rel='stylesheet' href='css/animate-animo.css' />
     <link type='text/css' rel='stylesheet' href='//fast.fonts.com/cssapi/23855eec-5fdf-4594-9898-0113a04bfef0.css' />
     <!-- <link type='text/css' rel='stylesheet' href='//js.arcgis.com/3.11/esri/css/esri.css'> -->
@@ -26,7 +29,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
 
     <link rel="stylesheet" type="text/css" href="css/zocial.css" />
 
-    <link type='text/css' rel='stylesheet' href='index.css?04122014'>
+    <link type='text/css' rel='stylesheet' href='index.css?01122015'>
     <!-- check browser version browser-update.org -->
     <script>
         var $buoop = {
@@ -42,13 +45,15 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
         catch (e) { window.attachEvent("onload", $buo_f) }
     </script>
-    <script type='text/javascript' src='js/hello.js'></script>
+    <script type='text/javascript' src='js/hello.js?01122015'></script>
     <!-- <script type='text/javascript' src='//js.arcgis.com/3.11compact/'></script> -->
     <script src="http://canterburymaps.govt.nz/api/3.14/arcgis_js_api/library/3.14/3.14/init.js"></script>
     <script type='text/javascript' src='js/jquery-2.1.1.min.js'></script>
-    <script type='text/javascript' src='js/bootstrap.min.js'></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!--<script type='text/javascript' src='js/bootstrap.min.js'></script>-->
     <script type='text/javascript' src='js/animo.js'></script>
-    <script type='text/javascript' src='index.js?05122014'></script>
+    <script type='text/javascript' src='index.js?03122015'></script>
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
 
@@ -72,6 +77,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     </div>
     <div id="fb-root"></div>
     <div id='map' class='rc-full rc-disable'></div>
+    <div id="sponsor" class='' style="display:none;opacity:.75;position:absolute;bottom:0px;left:0px;"><img src="img/Eagle_Esri.png" /></div>
     <div id='banner-welcome'>
         <div id="title">
             Welcome to MapQuiz by <a href="http://canterburymaps.govt.nz" title="Canterbury Maps" style="pointer-events:auto;"><img src="img/canterbury-maps-logo-2.png"></a>
@@ -80,6 +86,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         <div id='button-group-disconnected' class="btn-group">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
             <button id='button-login' type="button" class="btn btn-primary hide">Log In</button>
+            <button id='button-prizes' type='button' class='btn btn-primary'>Prizes &amp; Rules</button>
             <button id='button-highscores1' type='button' class='btn btn-primary'>High Scores</button>
         </div>
         <div id='sociallogon'>
@@ -99,6 +106,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         <div id='button-group-connected' class="btn-group">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
             <button id='button-play' type='button' class='btn btn-primary'>Play</button>
+            <button id='button-prizes2' type='button' class='btn btn-primary'>Prizes &amp; Rules</button>
             <button id='button-highscores2' type='button' class='btn btn-primary'>High Scores</button>
             <button id='button-logout' type='button' class='btn btn-primary'>Log Out</button>
             <div id='facebook-share' style='display:none'></div>
@@ -126,6 +134,10 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             <div class='rc-banner-label'>Lifetime</div>
             <div class='rc-banner-value' id='banner-top-life'></div>
         </div>
+            <div class='rc-banner-container'>
+                <div class='rc-banner-label'>Average</div>
+                <div class='rc-banner-value' id='banner-top-avg'></div>
+            </div>
         <div id='fb-name'></div>
         <div id='fb-picture'></div>
     </div>
@@ -176,40 +188,75 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         </div>
     </div>
     <div id='banner-highscore'>
-        <div id='banner-highscore-left'>
-            <div id='banner-highscore-left-title'>High Scores</div>
-            <button id='button-highscore-tohome' type='button' class='btn btn-primary'>
-                <!--<span class="glyphicon glyphicon-chevron-left"></span> Back-->
-                &lt; Back
-            </button>
-            <div id='banner-highscore-left-when'>When</div>
-            <div id='banner-highscore-left-when-toggles' data-toggle='buttons'>
-                <label class='btn btn-primary'>
-                    <input type='radio' name='when' id='button-when-today'> Today
-                </label>
-                <label class='btn btn-primary'>
-                    <input type='radio' name='when' id='button-when-month'> This Month
-                </label>
-                <label class='btn btn-primary'>
-                    <input type='radio' name='when' id='button-when-year'> This Year
-                </label>
-                <label class='btn btn-primary active'>
-                    <input type='radio' name='when' id='button-when-all' checked> All Time
-                </label>
+        <div class="row">
+            <div id='banner-highscore-left' class="col-md-2">
+                <div id='banner-highscore-left-title'>High Scores</div>
+                <button id='button-highscore-tohome' type='button' class='btn btn-primary'>
+                    <!--<span class="glyphicon glyphicon-chevron-left"></span> Back-->
+                    &lt; Back
+                </button>
+                <div id='banner-highscore-left-when'>When</div>
+                <div id='banner-highscore-left-when-toggles' data-toggle='buttons'>
+                    <label class='btn btn-primary'>
+                        <input type='radio' name='when' id='button-when-today'> Today
+                    </label>
+                    <label class='btn btn-primary'>
+                        <input type='radio' name='when' id='button-when-month'> This Month
+                    </label>
+                    <label class='btn btn-primary'>
+                        <input type='radio' name='when' id='button-when-year'> This Year
+                    </label>
+                    <label class='btn btn-primary active'>
+                        <input type='radio' name='when' id='button-when-all' checked> All Time
+                    </label>
+                </div>
+                <div id='banner-highscore-left-who'>Who</div>
+                <div id='banner-highscore-left-who-toggles' data-toggle='buttons'>
+                    <label class='btn btn-primary'>
+                        <input type='radio' name='who' id='button-who-me'> Just Me
+                    </label>
+                    <label class='btn btn-primary active'>
+                        <input type='radio' name='who' id='button-who-everyone' checked> Everyone
+                    </label>
+                </div>
+                <i class="registerBusy glyphicon glyphicon-busy"></i>
             </div>
-            <div id='banner-highscore-left-who'>Who</div>
-            <div id='banner-highscore-left-who-toggles' data-toggle='buttons'>
-                <label class='btn btn-primary'>
-                    <input type='radio' name='who' id='button-who-me'> Just Me
-                </label>
-                <label class='btn btn-primary active'>
-                    <input type='radio' name='who' id='button-who-everyone' checked> Everyone
-                </label>
-            </div>
-            <i class="registerBusy glyphicon glyphicon-busy"></i>
+            <div id='banner-highscore-right' class="col-md-10"></div>
         </div>
-        <div id='banner-highscore-right'></div>
     </div>
+    <div id="banner-prizes" style="display:none;">
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="">
+                        <h1>Prizes</h1>
+                        <div>
+                            <p>1st $50 Voucher</p>
+                            <p>2nd $50 Voucher</p>
+                            <p>3rd $50 Voucher</p>
+                            <p>4th $50 Voucher</p>
+                            <p>5th $50 Voucher</p>
+                            <p></p>
+                            <p>Note: Competition runs up to 31st Jan 2016.</p>
+                            <p>These prizes have been made possible by our mapping provider <a href="http://eagle.co.nz" style="color:white">Eagle Technology.</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <h1>Rules</h1>
+                        <p>The highest 5 indivduals win. Contestants must be able to be contacted through their social login via email. Employees of the Canterbury Maps Partner Councils and Eagle Technology cannot win the prizes.</p>
+                        <p>Only the first 5 entries will count towards the prizes. Any further entries will be ignored.</p>
+                        <p>If there is a tie for a prize, the highest person with the average will be choosen.</p>
+                        <p>Competition runs up to 31st Jan 2016. Prizes will be posted.</p>
+                        <p>Judges decisions are final. </p>
+                    </div>
+                    </div>
+        </div>
+        <button id='button-prizes-tohome' type='button' class='btn btn-primary pull-left'>
+            <!--<span class="glyphicon glyphicon-chevron-left"></span> Back-->
+            &lt; Back
+        </button>
+        </div>
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-3089899-26']);

@@ -423,3 +423,15 @@ font-family: monospace;
     height: 34px;
     display:inline-block;
 }
+
+
+#banner-prizes {
+    position: absolute;
+    top: 50%;
+    left: 0em;
+    right: 0em;
+    margin-top: -6em;
+    color:white;
+    text-align:center;
+    background-color: rgba(0, 0, 0, 0.6);
+}
