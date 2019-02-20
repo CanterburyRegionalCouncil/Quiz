@@ -41,9 +41,7 @@ function (
         var _gameIndex = 0;
         var _isHome = true;
         var _timer = null;
-
-
-
+        var _fb = null;
 
         //if (debug) console.log('auth:: ', auth);
         //if (debug) console.log('profile:: ', r);
@@ -53,8 +51,8 @@ function (
         //changeUser(true);
 
         // Constants
-        var QUIZ = 'http://arcgisprod03/arcgis/rest/services/Internal/MapQuiz_Scoring_NZTM/FeatureServer/1';
-        var SCORES = 'http://arcgisprod03/arcgis/rest/services/Internal/MapQuiz_Scoring_NZTM/FeatureServer/0';
+        var QUIZ = 'https://ecanmapstest.ecan.govt.nz/server/rest/services/Hosted/MapQuiz/FeatureServer/0';
+        var SCORES = 'https://ecanmapstest.ecan.govt.nz/server/rest/services/Hosted/MapQuiz/FeatureServer/1';
 
         var introMaps = [
         'http://gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
@@ -284,6 +282,7 @@ function (
         });
         $('#button-logout').click(function () {
             //FB.logout(facebookStatusChanged);
+            /*
             hello(_servicetype).logout().then(function () {
 
                 $('#button-group-disconnected').show();
@@ -298,6 +297,8 @@ function (
             }, function (e) {
                 alert("Signed out error:" + e.error.message);
             });
+            */
+            alert('Insert change user details function here.');
 
             randomiseMap();
         });
@@ -830,7 +831,7 @@ function (
             var query = new Query();
             query.where = '1=1';
             query.returnGeometry = false;
-            query.orderByFields = ['max_ DESC'];
+            //query.orderByFields = ['max_ DESC'];
             query.groupByFieldsForStatistics = ['fbid'];
             query.outStatistics = [s1, s2, s3];
 
