@@ -18,42 +18,16 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     <link rel="apple-touch-icon" sizes="72x72" href="http://canterburymaps.govt.nz/Content/images/ios/72x72iOS.png">
     <link rel="apple-touch-icon" sizes="114x114" href="http://canterburymaps.govt.nz/Content/images/ios/114x114iOS.png">
     <link rel="apple-touch-icon" sizes="144x144" href="http://canterburymaps.govt.nz/Content/images/ios/144x144iOS.png">
-    <link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
     <link type='text/css' rel='stylesheet' href='css/animate-animo.css' />
     <link type='text/css' rel='stylesheet' href='//fast.fonts.com/cssapi/23855eec-5fdf-4594-9898-0113a04bfef0.css' />
     <link type='text/css' rel='stylesheet' href='//js.arcgis.com/3.27/esri/css/esri.css'>
 
-    <link rel="stylesheet" type="text/css" href="css/zocial.css" />
-
     <link type='text/css' rel='stylesheet' href='index.css?04122014'>
-    <!-- check browser version browser-update.org -->
-    <script>
-        var $buoop = {
-            c: 2
-            //,test: true,
-            //text: "<p>You are using a browser which this viewer does not support. Some features may not work correctly. Upgrade to a <a href='http://www.whatbrowser.org/' target='_blank'>modern browser</a> to take full advantage of this site.</p>",                       // custom notification html text
-        };
-        function $buo_f() {
-            var e = document.createElement("script");
-            e.src = "//browser-update.org/update.js";
-            document.body.appendChild(e);
-        };
-        try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
-        catch (e) { window.attachEvent("onload", $buo_f) }
-    </script>
-    <script type='text/javascript' src='//js.arcgis.com/3.27/'></script>
-    <script type='text/javascript' src='js/jquery-2.1.1.min.js'></script>
-    <script type='text/javascript' src='js/bootstrap.min.js'></script>
-    <script type='text/javascript' src='js/animo.js'></script>
-    <script type='text/javascript' src='index.js?20190217'></script>
-
-    <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -76,22 +50,12 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         <div id="description">The game that tests your geographic literacy from historical/modern imagery within the Canterbury region</div>
         <div id='button-group-disconnected' class="btn-group">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
-            <button id='button-login' type="button" class="btn btn-primary hide">Log In</button>
+            <button id='button-play' type='button' class='btn btn-primary'>Play</button>
             <button id='button-highscores1' type='button' class='btn btn-primary'>High Scores</button>
         </div>
-        <!--
-            <div id='sociallogon'>
-                <div id="logintoplay">
-                    <strong>login to play ...</strong>
-                </div>
-                <button id="button-start" type="button" class="btn btn-primary">Start</button>
-            </div>
-        -->
         <div id='button-group-connected' class="btn-group">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
-            <button id='button-play' type='button' class='btn btn-primary'>Play</button>
             <button id='button-highscores2' type='button' class='btn btn-primary'>High Scores</button>
-            <button id='button-logout' type='button' class='btn btn-primary'>Log Out</button>
         </div>
     </div>
 
@@ -198,6 +162,98 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
         </div>
         <div id='banner-highscore-right'></div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="startGameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter Your Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group row">
+                            <div class="input-group md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Name</span>
+                                </div>
+                                <input type="text" aria-label="Name" class="form-control" id="inputName" placeholder="Enter your name for score board" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="input-group md-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Email Address</span>
+                                </div>
+                                <input type="email" aria-label="Email Address" class="form-control" id="inputEmail" placeholder="Enter email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <input type="checkbox" aria-label="Subscribe to Canterbury Maps Newsletters" id="inputSubscribe" checked>
+                                    </div>
+                                </div>
+                                <label class="form-control" for="inputSubscribe">I would like to subscribe to the Canterbury Maps newsletter</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="button-details-start">Start Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script defer type='text/javascript' src='//js.arcgis.com/3.27/'></script>
+
+    <!-- check browser version browser-update.org -->
+    <script>
+        var $buoop = {
+            c: 2
+            //,test: true,
+            //text: "<p>You are using a browser which this viewer does not support. Some features may not work correctly. Upgrade to a <a href='http://www.whatbrowser.org/' target='_blank'>modern browser</a> to take full advantage of this site.</p>",                       // custom notification html text
+        };
+        function $buo_f() {
+            var e = document.createElement("script");
+            e.src = "//browser-update.org/update.js";
+            document.body.appendChild(e);
+        };
+        try { document.addEventListener("DOMContentLoaded", $buo_f, false) }
+        catch (e) { window.attachEvent("onload", $buo_f) }
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script type='text/javascript' src='js/animo.js'></script>
+
+    <!-- App settings and main functions -->
+    <script defer type='text/javascript' src='index.js?20190217'></script>
+
+    <!--<script src="https://apis.google.com/js/platform.js" async defer></script>-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <!--<script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-3089899-26']);

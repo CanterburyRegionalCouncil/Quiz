@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -23,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.1</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,14 +76,13 @@
     <Content Include="CmapsPromo.jpg" />
     <Content Include="CmapsPromo.png" />
     <Content Include="css\animate-animo.css" />
-    <Content Include="css\bootstrap.min.css" />
-    <Content Include="css\zocial-regular-webfont.svg" />
-    <Content Include="css\zocial.css" />
     <Content Include="express.js" />
     <Content Include="img\10734344_635060119935685_581458495_n.png" />
     <Content Include="img\10734347_635060156602348_1207107113_n.png" />
     <Content Include="img\72x72iOS.png" />
     <Content Include="img\apple-touch-icon.png" />
+    <Content Include="img\avatar-1577909_100.png" />
+    <Content Include="img\avatar-1577909_960_720.png" />
     <Content Include="img\blue_blank.png" />
     <Content Include="img\busy-E8E7E7.gif" />
     <Content Include="img\busy.gif" />
@@ -97,9 +98,7 @@
     <Content Include="index.html" />
     <Content Include="index.js" />
     <Content Include="js\animo.js" />
-    <Content Include="js\basemaps.js" />
-    <Content Include="js\bootstrap.min.js" />
-    <Content Include="js\jquery-2.1.1.min.js" />
+    <Content Include="js\intromaps.js" />
     <Content Include="oauth.js" />
     <Content Include="question_featureService.js" />
     <Content Include="scoring_FeatureService.js" />
@@ -116,9 +115,6 @@
   <ItemGroup>
     <Content Include="calextents.xlsx" />
     <Content Include="CmapsPromo.xcf" />
-    <Content Include="css\zocial-regular-webfont.eot" />
-    <Content Include="css\zocial-regular-webfont.ttf" />
-    <Content Include="css\zocial-regular-webfont.woff" />
     <Content Include="facebook_response.json" />
     <Content Include="google_response.json" />
     <Content Include="libman.json" />
@@ -143,11 +139,15 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
