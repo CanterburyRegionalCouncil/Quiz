@@ -42,26 +42,27 @@ function (
         var _isHome = true;
         var _timer = null;
         var _fb = null;
+        var _playing = false;
 
         // Constants
         var QUIZ = 'https://ecanmapstest.ecan.govt.nz/server/rest/services/Hosted/MapQuiz/FeatureServer/0';
         var SCORES = 'https://ecanmapstest.ecan.govt.nz/server/rest/services/Hosted/MapQuiz/FeatureServer/1';
 
         var introMaps = [
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN152_Christchurch_19411014/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1940_1944/MapServer/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1343132.8424653546|5053301.037649063|1458491.406515816|5126326.183699355|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1382820.4218405131|5095634.4556492325|1479128.9477908984|5177126.285299559|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1438383.0329657355|5132147.028674379|1530987.384841106|5215226.361499711|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1486008.128215926|5144847.05407443|1576495.809191288|5246447.257274836|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1582316.6541663113|5141672.047724417|1606129.2017914066|5170247.104874532|6|18',
-            '//gis.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1541570.7393411482|5232159.728699779|1607716.7049664129|5299364.029775048|6|18',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1541570.7393411482|5232159.728699779|1607716.7049664129|5299364.029775048|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1631529.252591508|5302009.868400059|1660104.3097416223|5322118.241950139|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1651637.6261415887|5324764.0805751495|1674921.0060416816|5346459.957300236|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1610362.5435914234|5262322.2890249|1635233.4266665229|5293014.017075023|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1564854.1192412414|5300951.532950054|1585491.660516324|5322647.409675141|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1393403.7763405556|5008850.948748886|1454787.232440801|5045892.689499034|6|18',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/MapServer|1400812.1244905852|4959109.182598687|1434149.6911657185|4998796.761973846|6|18',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN2634_Christchurch_19730926/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1970_1974/MapServer|1566808.0483418903|5179712.738343977 | 1580672.2427369456|5185163.800912769|12|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
@@ -74,19 +75,18 @@ function (
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Topoimagery/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|12|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/SimpleBasemap/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|8|12',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Contours/MapServer|1511924.435624478 | 5153780.60467797 | 1591299.5943747954 |5231435.968322029|6|8',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN1786_Christchurch_19651029/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN393_Christchurch_19460528/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN8389_Christchurch_19840928/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN872_Christchurch_19550510/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15',
-            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/SN9381_Christchurch_19941126/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
-
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1965_1969/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1945_1949/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1980_1984/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1955_1959/MapServer|1551912.35 | 5173578.41 | 1568382.70 | 5164317.97|13|15',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/Canterbury_Imagery_1990_1994/MapServer|1561912.35 | 5183578.41 | 1578382.70 | 5174317.97|13|16',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1438383.0329657355|5132147.028674379|1530987.384841106|5215226.361499711|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1486008.128215926|5144847.05407443|1576495.809191288|5246447.257274836|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1582316.6541663113|5141672.047724417|1606129.2017914066|5170247.104874532|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1541570.7393411482|5232159.728699779|1607716.7049664129|5299364.029775048|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1631529.252591508|5302009.868400059|1660104.3097416223|5322118.241950139|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1651637.6261415887|5324764.0805751495|1674921.0060416816|5346459.957300236|6|15',
-            '//gisbasmap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1610362.5435914234|5262322.2890249|1635233.4266665229|5293014.017075023|6|15',
+            '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1610362.5435914234|5262322.2890249|1635233.4266665229|5293014.017075023|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1564854.1192412414|5300951.532950054|1585491.660516324|5322647.409675141|6|15',
             '//gisbasemap.ecan.govt.nz/arcgis/rest/services/Imagery/TL_Ortho75_Canterbury/MapServer|1393403.7763405556|5008850.948748886|1454787.232440801|5045892.689499034|6|15'
         ];
@@ -418,6 +418,8 @@ function (
         }
 
         function getGames(ids) {
+            if (debug) console.log('game ids', ids);
+
             var defer = new $.Deferred();
             var query = new Query();
             query.objectIds = ids;
@@ -480,6 +482,8 @@ function (
         function playQuiz() {
             var defer = new $.Deferred();
 
+            if (debug) console.log('playquiz start');
+
             // Clease map rotation
             $('#map').animo('cleanse');
             restoreMargins(map);
@@ -491,11 +495,16 @@ function (
                 .addClass('btn-default');
 
             // Start timer only after map has loaded
-            var playing = true;
-            var mapUpdate = map.on('update-end', function () {
-                mapUpdate.remove();
-                if (!playing) { return; }
-                playing = false;
+            _playing = true;
+            //var mapUpdate =
+            map.on('update-end', function () {
+                if (debug) console.log('playquiz map update-end', _playing);
+
+                //if (mapUpdate) mapUpdate.remove();
+                if (!_playing) {
+                    return;
+                }
+                _playing = false;
 
                 if (debug) console.log('games', _games);
 
@@ -576,41 +585,60 @@ function (
                 }
             );
 
-            // Zoom to quiz
-
+            //change base map if not the same, and set extent
             var _extent = _games[_gameIndex].quiz.location.getExtent();
-            map.setExtent(_extent);
 
-            if (debug) console.log('basemap map:', map.getLayer("intromap"));
-            
-            //change base map if not the same
-            if (baseLayer.url.replace('https:','').replace('http','') !== _games[_gameIndex].quiz.MapServiceURL) {
-                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL, false);
+            if (baseLayer.url.replace('https:', '').replace('http', '') !== _games[_gameIndex].quiz.MapServiceURL) {
+                changeBaseMap(_games[_gameIndex].quiz.MapServiceURL, false, _extent);
+            } else {
+                if (debug) console.log('playquiz basemap map:', map.getLayer("intromap"));
+
+                // Zoom to quiz
+                map.setExtent(_extent);
             }
+
             return defer.promise();
         };
 
-        function changeBaseMap(url, changeZoom) {
+        function changeBaseMap(url, changeZoom, _extent) {
+            if (debug) console.log('changeBasemap new baselayer:', url);
+
             map.removeLayer(baseLayer);
+            map.removeLayer(baseLayer);
+            if (baseLayerUpdateEnd) baseLayerUpdateEnd.remove();
+            if (baseLayerUpdateStart) baseLayerUpdateStart.remove();
+            if (baseLayerLoaded) baseLayerLoaded.remove();
+
             baseLayer = new ArcGISTiledMapServiceLayer(url, {
                 id: 'intromap'
             });
-            baseLayer.on('update-end', function () {
+
+            var baseLayerLoaded = baseLayer.on('load', function () {
+                if (debug) console.log('load baselayer');
+                if (_extent) {
+                    if (debug) console.log('load baselayer extent', _extent);
+                    // Zoom to quiz
+                    map.setExtent(_extent);
+                }
+            });
+
+            var baseLayerUpdateEnd = baseLayer.on('update-end', function () {
                 //show progress 
                 $('.registerBusy').hide();
                 if (debug) console.log('update-end baselayer');
             });
 
-            baseLayer.on('update-start', function () {
+            var baseLayerUpdateStart = baseLayer.on('update-start', function () {
                 //show progress 
                 $('.registerBusy').show();
-                if (debug) console.log('update-stART baselayer', baseLayer.url, '::zoomlevel', map.getZoom(), 'extent ::', map.extent);
+                if (debug) console.log('update-start baselayer', baseLayer.url, '::zoomlevel', map.getZoom(), 'extent ::', map.extent);
             });
             map.addLayer(baseLayer);
 
-            if (changeZoom)
+            if (changeZoom) {
+                if (debug) console.log('changeBasemap changezoom setzoom');
                 map.setZoom(getRandomInt(Number(introMap.split('|')[5]), Number(introMap.split('|')[6])).toString());  ///17
-
+            }
         };
 
         function showGameScore() {
@@ -879,6 +907,10 @@ function (
 
             // Load new scores
             showScores().done(function (scores) {
+                //sort scores
+
+
+
                 $.each(scores, function () {
                     var div = $(document.createElement('div'))
                         .css('display', 'inline-block')
@@ -945,12 +977,14 @@ function (
                     //for name
                     var _profilename = $(document.createElement('div'))
                         .css('position', 'absolute')
-                        .css('color', 'whitesmoke')
-                        .css('font-size', ' 1em')
+                        .css('color', 'black')
+                        .css('font-size', '1em')
+                        .css('font-weight','bold')
                         .css('pointer-events', 'none')
                         .css('bottom', '5px')
                         .css('left', '5px')
-                        .css('overflow', 'hidden');
+                        .css('overflow', 'hidden')
+                        .css('text-overflow', 'ellipsis');
                     //add _profilename
 
                     var textnode = $(document.createTextNode(this.profilename));

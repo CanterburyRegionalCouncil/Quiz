@@ -125,6 +125,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="proxy.example.config" />
+    <None Include="Properties\PublishProfiles\GISWebTest01 [TEST INTERNAL].pubxml" />
     <None Include="proxy.xsd">
       <SubType>Designer</SubType>
     </None>
