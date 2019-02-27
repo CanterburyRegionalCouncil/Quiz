@@ -76,6 +76,7 @@
     <Content Include="CmapsPromo.jpg" />
     <Content Include="CmapsPromo.png" />
     <Content Include="css\animate-animo.css" />
+    <Content Include="css\index.responsive.css" />
     <Content Include="express.js" />
     <Content Include="img\10734344_635060119935685_581458495_n.png" />
     <Content Include="img\10734347_635060156602348_1207107113_n.png" />
@@ -94,7 +95,7 @@
     <Content Include="img\loading1.gif" />
     <Content Include="img\pink_blank.png" />
     <Content Include="img\twitter_button.png" />
-    <Content Include="index.css" />
+    <Content Include="css\index.css" />
     <Content Include="index.html" />
     <Content Include="index.js" />
     <Content Include="js\animo.js" />

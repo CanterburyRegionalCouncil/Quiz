@@ -27,7 +27,8 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
     <link type='text/css' rel='stylesheet' href='//fast.fonts.com/cssapi/23855eec-5fdf-4594-9898-0113a04bfef0.css' />
     <link type='text/css' rel='stylesheet' href='//js.arcgis.com/3.27/esri/css/esri.css'>
 
-    <link type='text/css' rel='stylesheet' href='index.css?04122014'>
+    <link type='text/css' rel='stylesheet' href='css/index.css?20190228'>
+    <link type='text/css' rel='stylesheet' href='css/index.responsive.css'>
 
 </head>
 
@@ -48,14 +49,14 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             Welcome to MapQuiz by <a href="https://canterburymaps.govt.nz" title="Canterbury Maps" style="pointer-events:auto;"><img src="img/canterbury-maps-logo-2.png"></a>
         </div>
         <div id="description">The game that tests your geographic literacy from historical/modern imagery within the Canterbury region</div>
-        <div id='button-group-disconnected' class="btn-group">
+        <div id='button-group-disconnected' class="btn-group pb-2">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
-            <button id='button-play' type='button' class='btn btn-primary'>Play</button>
-            <button id='button-highscores1' type='button' class='btn btn-primary'>High Scores</button>
+            <button id='button-play' type='button' class='btn btn-primary btn-lg fw'>Play</button>
+            <button id='button-highscores1' type='button' class='btn btn-primary btn-lg fw'>High Scores</button>
         </div>
         <div id='button-group-connected' class="btn-group">
             <i class="registerBusy glyphicon glyphicon-busy"></i>
-            <button id='button-highscores2' type='button' class='btn btn-primary'>High Scores</button>
+            <button id='button-highscores2' type='button' class='btn btn-primary fw'>High Scores</button>
         </div>
     </div>
 
@@ -79,20 +80,27 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             <div class='rc-banner-label'>Lifetime</div>
             <div class='rc-banner-value' id='banner-top-life'></div>
         </div>
-        <div id='fb-name'></div>
-        <div id='fb-picture'></div>
     </div>
-    <div id='banner-bottom'>
+    <div id='banner-bottom' class="container-fluid">
         <div id='timer-background'></div>
         <div id='timer-sand'></div>
         <div id='question'></div>
-        <div id='answers'>
-            <button id='button-answer1' type='button' class='btn btn-primary'></button>
-            <button id='button-answer2' type='button' class='btn btn-primary'></button>
-            <button id='button-answer3' type='button' class='btn btn-primary'></button>
-            <button id='button-answer4' type='button' class='btn btn-primary'></button>
+        <div id='answers' class="row">
+            <div class="col col-6 col-md-3 py-2">
+                <button id='button-answer1' type='button' class='btn btn-primary btn-block'></button>
+            </div>
+            <div class="col col-6 col-md-3 py-2">
+                <button id='button-answer2' type='button' class='btn btn-primary btn-block'></button>
+            </div>
+            <div class="col col-6 col-md-3 py-2">
+                <button id='button-answer3' type='button' class='btn btn-primary btn-block'></button>
+            </div>
+            <div class="col col-6 col-md-3 py-2">
+                <button id='button-answer4' type='button' class='btn btn-primary btn-block'></button>
+            </div>
         </div>
     </div>
+
     <div id='banner-answer'>
         <div id='banner-answer-left'>
             <div id='banner-answer-left-title'>Score</div>
@@ -113,7 +121,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
                 <div id='banner-answer-left-total-value'></div>
             </div>
         </div>
-        <div id='banner-answer-right'>
+        <div id='banner-answer-right' class="d-none d-sm-block">
             <div id='banner-answer-right-title'></div>
             <div id='banner-answer-right-value'></div>
             <div id='banner-answer-right-credit'>
@@ -128,6 +136,7 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             <button id='button-newgame' type='button' class='btn btn-primary'>New Game</button>
         </div>
     </div>
+
     <div id='banner-highscore'>
         <div id='banner-highscore-left'>
             <div id='banner-highscore-left-title'>High Scores</div>
@@ -152,8 +161,8 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             <div id='banner-highscore-left-who'>Who</div>
             <div id='banner-highscore-left-who-toggles' data-toggle='buttons'>
                 <!--<label class='btn btn-primary'>
-        <input type='radio' name='who' id='button-who-me'> Just Me
-    </label>-->
+                    <input type='radio' name='who' id='button-who-me'> Just Me
+                </label>-->
                 <label class='btn btn-primary active'>
                     <input type='radio' name='who' id='button-who-everyone' checked> Everyone
                 </label>
@@ -174,37 +183,44 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container">
-                        <div class="form-group row">
-                            <div class="input-group md-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Name</span>
-                                </div>
-                                <input type="text" aria-label="Name" class="form-control" id="inputName" placeholder="Enter your name for score board" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="input-group md-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Email Address</span>
-                                </div>
-                                <input type="email" aria-label="Email Address" class="form-control" id="inputEmail" placeholder="Enter email" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" aria-label="Subscribe to Canterbury Maps Newsletters" id="inputSubscribe" checked>
+                    <form class="needs-validation" id="form-details" novalidate>
+                        <div class="container">
+                            <div class="form-group row">
+                                <div class="input-group md-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Name</span>
+                                    </div>
+                                    <input type="text" aria-label="Name" class="form-control" id="inputName" placeholder="Enter your name for score board" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        Please enter your name.
                                     </div>
                                 </div>
-                                <label class="form-control" for="inputSubscribe">I would like to subscribe to the Canterbury Maps newsletter</label>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="input-group md-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Email Address</span>
+                                    </div>
+                                    <input type="email" aria-label="Email Address" class="form-control" id="inputEmail" placeholder="Enter email" required autocomplete="off">
+                                    <div class="invalid-feedback">
+                                        Please enter email address.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input type="checkbox" aria-label="Subscribe to Canterbury Maps Newsletters" id="inputSubscribe" checked>
+                                        </div>
+                                    </div>
+                                    <label class="form-control" for="inputSubscribe">I would like to subscribe to the Canterbury Maps newsletter</label>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -213,8 +229,6 @@ Waimakariri District Council,Christchurch City Council,Selwyn District Council,A
             </div>
         </div>
     </div>
-
-
 
     <script defer type='text/javascript' src='//js.arcgis.com/3.27/'></script>
 

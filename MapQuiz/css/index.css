@@ -33,14 +33,13 @@
     pointer-events: none;
 }
 
-.glyphicon-busy
-{
-    background-image: url(img/loader.gif);
+.glyphicon-busy {
+    background-image: url(../img/loader.gif);
     background-repeat: no-repeat;
     background-position: center;
     width: 100px;
     height: 30px;
-    display:inline-block;
+    display: inline-block;
     background-color: rgba(255, 255, 255, 0.85);
 }
 
@@ -53,15 +52,17 @@
     margin-top: -6em;
     background-color: rgba(0, 0, 0, 0.6);
 }
-#logintoplay{
+
+#logintoplay {
     background-color: white;
-padding: 10px;
-text-align: center;
-opacity: .6;
-padding-top: 0px;
-font-size: 2em;
-font-family: monospace;
+    padding: 10px;
+    text-align: center;
+    opacity: .6;
+    padding-top: 0px;
+    font-size: 2em;
+    font-family: monospace;
 }
+
 #banner-top {
     position: absolute;
     top: 0em;
@@ -94,7 +95,7 @@ font-family: monospace;
     bottom: 0em;
     width: 10em;
     background-color: rgba(0, 0, 0, 0.6);
-    padding: 1em 1em 1em 1em ;
+    padding: 1em 1em 1em 1em;
 }
 
 #banner-highscore-right {
@@ -123,12 +124,16 @@ font-family: monospace;
 }
 
 .btn {
-    border-radius:  0px 0px; 
+    border-radius: 0px 0px;
     /*border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;*/
 }
+
+    .btn.fw {
+        min-width: 120px;
+    }
 
 #banner-bottom {
     position: absolute;
@@ -150,18 +155,18 @@ font-family: monospace;
 }
 
 #banner-answer-left {
-    position:absolute;
-    top:0em;
-    left:1em;
-    width:15em;
+    position: absolute;
+    top: 0em;
+    left: 1em;
+    width: 15em;
     bottom: 3.5em;
 }
 
 #banner-answer-right {
-    position:absolute;
-    top:0em;
-    left:16em;
-    right:0em;
+    position: absolute;
+    top: 0em;
+    left: 16em;
+    right: 0em;
     bottom: 3.5em;
 }
 
@@ -209,7 +214,7 @@ font-family: monospace;
 #banner-answer-left-total-value {
     color: white;
     font-family: 'AvenirNextLTW01-Heavy';
-    font-size: 1.2em;  
+    font-size: 1.2em;
     display: inline-block;
     width: 3.5em;
     text-align: right;
@@ -255,14 +260,14 @@ font-family: monospace;
 }
 
 #button-group-disconnected {
-    position:absolute;
+    position: absolute;
     left: 50%;
-    margin-left: -5em;
+    margin-left: -7em;
     margin-top: 1em;
 }
 
 #button-group-connected {
-    position:absolute;
+    position: absolute;
     left: 50%;
     margin-left: -8em;
     margin-top: 1em;
@@ -308,118 +313,190 @@ font-family: monospace;
 
 .rc-banner-value {
     font-family: 'AvenirNextLTW01-Heavy';
-    font-size: 1.2em;   
+    font-size: 1.2em;
 }
 
 #timer-background {
     position: absolute;
-    left:0em;
-    right:0em;
-    top:0em;
+    left: 0em;
+    right: 0em;
+    top: 0em;
     height: 0.2em;
     background-color: white;
 }
 
 #timer-sand {
     position: absolute;
-    left:0em;
-    right:0em;
-    top:0em;
+    left: 0em;
+    right: 0em;
+    top: 0em;
     height: 0.2em;
     background-color: red;
 }
 
 @-webkit-keyframes shift-right {
-  0% { -webkit-transform: translateX(0%); }
-  100% { -webkit-transform: translateX(100%); }
+    0% {
+        -webkit-transform: translateX(0%);
+    }
+
+    100% {
+        -webkit-transform: translateX(100%);
+    }
 }
 
 @-moz-keyframes shift-right {
-  0% { -moz-transform: translateX(0%); }
-  100% { -moz-transform: translateX(100%); }
+    0% {
+        -moz-transform: translateX(0%);
+    }
+
+    100% {
+        -moz-transform: translateX(100%);
+    }
 }
 
 @-o-keyframes shift-right {
-  0% { -o-transform: translateX(0%); }
-  100% { -o-transform: translateX(100%); }
+    0% {
+        -o-transform: translateX(0%);
+    }
+
+    100% {
+        -o-transform: translateX(100%);
+    }
 }
 
 @keyframes shift-right {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .animated.shift-right {
-	-webkit-animation-name: shift-right;
-	-moz-animation-name: shift-right;
-	-o-animation-name: shift-right;
-	animation-name: shift-right;
+    -webkit-animation-name: shift-right;
+    -moz-animation-name: shift-right;
+    -o-animation-name: shift-right;
+    animation-name: shift-right;
 }
 
 @-webkit-keyframes glow-red {
-  0% { color: white; }
-  10% { color: red; }
-  100% { color: white; }
+    0% {
+        color: white;
+    }
+
+    10% {
+        color: red;
+    }
+
+    100% {
+        color: white;
+    }
 }
 
 @-moz-keyframes glow-red {
-  0% { color: white; }
-  20% { color: red; }
-  100% { color: white; }
+    0% {
+        color: white;
+    }
+
+    20% {
+        color: red;
+    }
+
+    100% {
+        color: white;
+    }
 }
 
 @-o-keyframes glow-red {
-  0% { color: white; }
-  20% { color: red; }
-  100% { color: white; }
+    0% {
+        color: white;
+    }
+
+    20% {
+        color: red;
+    }
+
+    100% {
+        color: white;
+    }
 }
 
 @keyframes glow-red {
-  0% { color: white; }
-  20% { color: red; }
-  100% { color: white; }
+    0% {
+        color: white;
+    }
+
+    20% {
+        color: red;
+    }
+
+    100% {
+        color: white;
+    }
 }
 
 .animated.glow-red {
-	-webkit-animation-name: glow-red;
-	-moz-animation-name: glow-red;
-	-o-animation-name: glow-red;
-	animation-name: glow-red;
+    -webkit-animation-name: glow-red;
+    -moz-animation-name: glow-red;
+    -o-animation-name: glow-red;
+    animation-name: glow-red;
 }
 
 @-webkit-keyframes grow {
-  0% { -webkit-transform: scale(1); }
-  100% { -webkit-transform: scale(1.1); }
+    0% {
+        -webkit-transform: scale(1);
+    }
+
+    100% {
+        -webkit-transform: scale(1.1);
+    }
 }
 
 @-moz-keyframes grow {
-  0% { -moz-transform: scale(1); }
-  100% { -moz-transform: scale(1.1); }
+    0% {
+        -moz-transform: scale(1);
+    }
+
+    100% {
+        -moz-transform: scale(1.1);
+    }
 }
 
 @-o-keyframes grow {
-  0% { -o-transform: scale(1); }
-  100% { -o-transform: scale(1.1); }
+    0% {
+        -o-transform: scale(1);
+    }
+
+    100% {
+        -o-transform: scale(1.1);
+    }
 }
 
 @keyframes grow {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
 }
 
 .animated.grow {
-	-webkit-animation-name: grow;
-	-moz-animation-name: grow;
-	-o-animation-name: grow;
-	animation-name: grow;
+    -webkit-animation-name: grow;
+    -moz-animation-name: grow;
+    -o-animation-name: grow;
+    animation-name: grow;
 }
 
 
-#facebook-share{
+#facebook-share {
     background-image: url(img/facebook_button.png);
     background-repeat: no-repeat;
     background-position: center;
     width: 122px;
     height: 34px;
-    display:inline-block;
+    display: inline-block;
 }

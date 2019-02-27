@@ -248,6 +248,11 @@ function (
 
         // Button events
         $('#button-play').click(function () {
+            //reset login
+            $('#inputEmail').val('');
+            $('#inputName').val('');
+            $('#inputSubscribe').attr("checked", true);
+
             //showlogin
             $('#startGameModal').modal({
                 keyboard: false
@@ -255,6 +260,13 @@ function (
         });
 
         $('#button-details-start').click(function () {
+            var form = $('#form-details')[0];
+
+            if (form.checkValidity() === false) {
+                form.classList.add('was-validated');
+                return;
+            }
+
             $('#startGameModal').modal('hide');
 
             _isHome = false;
@@ -262,7 +274,7 @@ function (
             $('#banner-top-high-score').html('0pt');
 
             _fb = {
-                id: $('#inputEmail').val().toLowerCase().hashCode(),
+                id: $('#inputEmail').val().toLowerCase().hashCode().toString(),
                 name: $('#inputName').val(),
                 email: $('#inputEmail').val(),
                 subscribe: $('#inputSubscribe').attr("checked")
@@ -311,7 +323,7 @@ function (
             $('#banner-top-high-score').html('0pt');
             playQuiz();
         });
-        $('#answers > button').click(function () {
+        $('#answers > div > button').click(function () {
             // Stop timer
             if (_timer) {
                 window.clearTimeout(_timer);
@@ -489,7 +501,7 @@ function (
             restoreMargins(map);
 
             // Restore button classes
-            $('#answers > button')
+            $('#answers > div > button')
                 .removeClass('btn-success')
                 .removeClass('btn-danger')
                 .addClass('btn-default');
@@ -526,7 +538,7 @@ function (
                 $('#button-answer2').html(answers[1]);
                 $('#button-answer3').html(answers[2]);
                 $('#button-answer4').html(answers[3]);
-                $('#answers > button').removeAttr('disabled');
+                $('#answers > div > button').removeAttr('disabled');
 
                 if (_timer) {
                     clearTimeout(_timer);
@@ -643,14 +655,14 @@ function (
 
         function showGameScore() {
             // Disable answer buttons
-            $('#answers > button').attr('disabled', 'disabled');
+            $('#answers > div > button').attr('disabled', 'disabled');
 
             // Stop animation
             $('#timer-sand').animo('pause');
             $('#map').animo('pause');
 
             // Show correct answer
-            $('#answers > button').each(function () {
+            $('#answers > div > button').each(function () {
                 if ($(this).html() === _games[_gameIndex].quiz.answer) {
                     $(this).removeClass('btn-default');
                     $(this).addClass('btn-success');
@@ -907,10 +919,6 @@ function (
 
             // Load new scores
             showScores().done(function (scores) {
-                //sort scores
-
-
-
                 $.each(scores, function () {
                     var div = $(document.createElement('div'))
                         .css('display', 'inline-block')
@@ -1006,13 +1014,8 @@ function (
                     div.appendTo('#banner-highscore-right');
 
                     //update image ...
-                    //if (this.ThumbnailUrl) {
-                    //    img.css({
-                    //        background: 'url({0})'.format(this.ThumbnailUrl) + ' no-repeat'
-                    //    });
-                    //}
                     img.css({
-                           background: 'url({0})'.format('img/avatar-1577909_100.png') + ' no-repeat'
+                        background: 'url({0})'.format('img/avatar-1577909_100.png') + ' no-repeat'
                     });
 
 
@@ -1039,19 +1042,19 @@ function (
             // Filter by time
             var d = new Date();
             if ($('#button-when-today').prop('checked')) {
-                where += " AND date >= '{0}/{1}/{2}'".format(
+                where += " AND date >= '{1}/{0}/{2}'".format(
                     d.getMonth() + 1,
                     d.getDate(),
                     d.getFullYear()
                 );
             } else if ($('#button-when-month').prop('checked')) {
-                where += " AND date >= '{0}/{1}/{2}'".format(
+                where += " AND date >= '{1}/{0}/{2}'".format(
                     d.getMonth() + 1,
                     '1',
                     d.getFullYear()
                 );
             } else if ($('#button-when-year').prop('checked')) {
-                where += " AND date >= '{0}/{1}/{2}'".format(
+                where += " AND date >= '{1}/{0}/{2}'".format(
                     '1',
                     '1',
                     d.getFullYear()
