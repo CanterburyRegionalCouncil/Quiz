@@ -135,6 +135,11 @@
         min-width: 120px;
     }
 
+    .btn-answer {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
 #banner-bottom {
     position: absolute;
     bottom: 0em;
@@ -281,6 +286,13 @@
     text-align: center;
     color: white;
     font-size: 1.5em;
+
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    line-height: 1em;
+    max-height: 2em;
 }
 
 #answers {

@@ -8,4 +8,26 @@
     #banner-bottom {
         height: 10em;
     }
+
+    #question {
+        font-size: 1.1em;
+    }
+
+    .btn-answer {
+        font-size: 0.8em;
+    }
+
+    .input-exp {
+        height: 4em;
+    }
+
+    #title {
+        font-size: 2.0em;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    #description {
+        font-size: 1.2em;
+    }
 }
