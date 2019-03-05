@@ -30,4 +30,43 @@
     #description {
         font-size: 1.2em;
     }
+
+    #button-group-disconnected {
+        left:50%;
+        margin-left: -150px;
+    }
+
+    #description {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+    .power-block {
+        position: absolute;
+        left: 50%;
+        margin-left: -98px;
+        float: none;
+        top: 300px !important;
+    }
+
+    .power-block > p {
+        font-size: 1em;
+        color: inherit;
+        text-align: center;
+    }
+
+    .block-logo {
+        background-image: url("../img/canterbury-maps-logo-2.png");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        width: 186px;
+        height: 74px;
+
+        display: block;
+    }
+
+    .fw {
+        min-width: 150px !important;
+    }
+
 }

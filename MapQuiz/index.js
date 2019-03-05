@@ -255,7 +255,8 @@ function (
 
             //showlogin
             $('#startGameModal').modal({
-                keyboard: false
+                keyboard: false,
+                backdrop: 'static'
             });
         });
 
