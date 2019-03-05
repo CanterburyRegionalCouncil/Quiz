@@ -76,7 +76,7 @@
             <div class='rc-banner-label'>Ranking</div>
             <div class='rc-banner-value' id='banner-top-rank'></div>
         </div>
-        <div class='rc-banner-container d-none d-sm-block'>
+        <div class='rc-banner-container d-none d-sm-inline-block'>
             <div class='rc-banner-label'>Lifetime</div>
             <div class='rc-banner-value' id='banner-top-life'></div>
         </div>
